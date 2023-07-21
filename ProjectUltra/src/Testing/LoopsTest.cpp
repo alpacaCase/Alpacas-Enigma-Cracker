@@ -40,7 +40,7 @@ void loopsTest()
 
 	cout << endl;
 
-	for (unsigned int k = 0; k < strings.size(); k++) for (int length = 1; length < 30; length++)
+	for (unsigned int k = 0; k < strings.size(); k++) for (int length = 1; length < 31; length++)
 	{
 		//Convert to numbers of right size and randomly encrypt
 		vector<int> plainnumbers = stringToNumbers(strings[k]);
@@ -49,17 +49,23 @@ void loopsTest()
 
 		//Sum number of loops
 		int total = 0;
+		int totalLoopLengths = 0;
 		for (int i = 0; i < n; i++)
 		{
 			cipherGraph menu;
 			menu.buildGraph(numberVectorToString(plainnumbers), numberVectorToString(ciphernumbers[i]));
 			menu.findLoops();
 			total += menu.loops.size();
+			for (unsigned int j = 0; j < menu.loops.size(); j++)
+			{
+				totalLoopLengths += menu.loops[j].size();
+			}
 		}
 
 		//Calculate and output
 		double average = double(total) / double(n);
-		string temp = "Case " + to_string(k) + ", length " + paddedNumber(length) + ", average # of loops: " + to_string(average) + "\n";
+		double averageLoopLength = double(totalLoopLengths) / double(total);
+		string temp = "Case " + to_string(k) + ", length " + paddedNumber(length) + ", average # of loops: " + to_string(average) + ", average # of vertices in loop: " + to_string(averageLoopLength) + "\n";
 		cout << temp;
 		output += temp;
 	}

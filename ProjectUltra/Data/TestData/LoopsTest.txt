@@ -2,119 +2,123 @@ Case 0: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Case 1: tobeornottobethatisthetroublingthingtobeornottobethatisthetroublingthing
 Case 2: itisatruthuniversallyacknowledgedthataitisatruthuniversallyacknowledgedthata
 Case 3: thequickbrownfoxjumpedoverthelazydogthequickbrownfoxjumpedoverthelazydog
-Case 0, length  1, average # of loops: 0.000000
-Case 0, length  2, average # of loops: 0.041000
-Case 0, length  3, average # of loops: 0.120400
-Case 0, length  4, average # of loops: 0.246200
-Case 0, length  5, average # of loops: 0.405600
-Case 0, length  6, average # of loops: 0.585000
-Case 0, length  7, average # of loops: 0.808800
-Case 0, length  8, average # of loops: 1.065200
-Case 0, length  9, average # of loops: 1.344000
-Case 0, length 10, average # of loops: 1.661400
-Case 0, length 11, average # of loops: 1.995000
-Case 0, length 12, average # of loops: 2.351200
-Case 0, length 13, average # of loops: 2.750800
-Case 0, length 14, average # of loops: 3.172600
-Case 0, length 15, average # of loops: 3.602600
-Case 0, length 16, average # of loops: 4.071200
-Case 0, length 17, average # of loops: 4.553200
-Case 0, length 18, average # of loops: 5.047000
-Case 0, length 19, average # of loops: 5.579200
-Case 0, length 20, average # of loops: 6.110400
-Case 0, length 21, average # of loops: 6.682800
-Case 0, length 22, average # of loops: 7.263400
-Case 0, length 23, average # of loops: 7.854600
-Case 0, length 24, average # of loops: 8.459000
-Case 0, length 25, average # of loops: 9.078200
-Case 0, length 26, average # of loops: 9.720800
-Case 0, length 27, average # of loops: 10.374000
-Case 0, length 28, average # of loops: 11.043400
-Case 0, length 29, average # of loops: 11.733400
-Case 1, length  1, average # of loops: 0.000000
-Case 1, length  2, average # of loops: 0.002600
-Case 1, length  3, average # of loops: 0.007400
-Case 1, length  4, average # of loops: 0.012600
-Case 1, length  5, average # of loops: 0.065600
-Case 1, length  6, average # of loops: 0.081000
-Case 1, length  7, average # of loops: 0.098200
-Case 1, length  8, average # of loops: 0.234000
-Case 1, length  9, average # of loops: 0.341200
-Case 1, length 10, average # of loops: 0.515600
-Case 1, length 11, average # of loops: 0.739600
-Case 1, length 12, average # of loops: 0.924000
-Case 1, length 13, average # of loops: 1.139600
-Case 1, length 14, average # of loops: 1.471000
-Case 1, length 15, average # of loops: 1.619200
-Case 1, length 16, average # of loops: 1.781200
-Case 1, length 17, average # of loops: 2.222600
-Case 1, length 18, average # of loops: 2.442000
-Case 1, length 19, average # of loops: 2.678400
-Case 1, length 20, average # of loops: 3.232000
-Case 1, length 21, average # of loops: 3.723800
-Case 1, length 22, average # of loops: 4.304400
-Case 1, length 23, average # of loops: 4.962200
-Case 1, length 24, average # of loops: 5.560200
-Case 1, length 25, average # of loops: 6.263000
-Case 1, length 26, average # of loops: 6.702800
-Case 1, length 27, average # of loops: 7.425400
-Case 1, length 28, average # of loops: 7.913600
-Case 1, length 29, average # of loops: 8.634600
-Case 2, length  1, average # of loops: 0.000000
-Case 2, length  2, average # of loops: 0.001800
-Case 2, length  3, average # of loops: 0.047200
-Case 2, length  4, average # of loops: 0.056800
-Case 2, length  5, average # of loops: 0.068800
-Case 2, length  6, average # of loops: 0.135200
-Case 2, length  7, average # of loops: 0.156800
-Case 2, length  8, average # of loops: 0.180600
-Case 2, length  9, average # of loops: 0.328000
-Case 2, length 10, average # of loops: 0.374000
-Case 2, length 11, average # of loops: 0.514800
-Case 2, length 12, average # of loops: 0.579800
-Case 2, length 13, average # of loops: 0.821600
-Case 2, length 14, average # of loops: 0.919800
-Case 2, length 15, average # of loops: 1.038200
-Case 2, length 16, average # of loops: 1.314800
-Case 2, length 17, average # of loops: 1.631800
-Case 2, length 18, average # of loops: 1.995400
-Case 2, length 19, average # of loops: 2.223200
-Case 2, length 20, average # of loops: 2.678600
-Case 2, length 21, average # of loops: 2.966800
-Case 2, length 22, average # of loops: 3.580400
-Case 2, length 23, average # of loops: 3.928400
-Case 2, length 24, average # of loops: 4.307000
-Case 2, length 25, average # of loops: 4.960000
-Case 2, length 26, average # of loops: 5.412800
-Case 2, length 27, average # of loops: 5.876800
-Case 2, length 28, average # of loops: 6.680000
-Case 2, length 29, average # of loops: 7.450600
-Case 3, length  1, average # of loops: 0.000000
-Case 3, length  2, average # of loops: 0.001000
-Case 3, length  3, average # of loops: 0.004400
-Case 3, length  4, average # of loops: 0.010800
-Case 3, length  5, average # of loops: 0.016800
-Case 3, length  6, average # of loops: 0.025200
-Case 3, length  7, average # of loops: 0.038800
-Case 3, length  8, average # of loops: 0.051800
-Case 3, length  9, average # of loops: 0.071400
-Case 3, length 10, average # of loops: 0.091200
-Case 3, length 11, average # of loops: 0.116800
-Case 3, length 12, average # of loops: 0.144200
-Case 3, length 13, average # of loops: 0.177000
-Case 3, length 14, average # of loops: 0.215200
-Case 3, length 15, average # of loops: 0.372200
-Case 3, length 16, average # of loops: 0.437400
-Case 3, length 17, average # of loops: 0.508400
-Case 3, length 18, average # of loops: 0.787600
-Case 3, length 19, average # of loops: 0.908000
-Case 3, length 20, average # of loops: 1.052200
-Case 3, length 21, average # of loops: 1.473800
-Case 3, length 22, average # of loops: 1.690400
-Case 3, length 23, average # of loops: 2.295000
-Case 3, length 24, average # of loops: 2.579400
-Case 3, length 25, average # of loops: 3.285200
-Case 3, length 26, average # of loops: 3.993800
-Case 3, length 27, average # of loops: 4.740600
-Case 3, length 28, average # of loops: 5.530600
-Case 3, length 29, average # of loops: 6.377000
+Case 0, length  1, average # of loops: 0.000000, average # of vertices in loop: -nan(ind)
+Case 0, length  2, average # of loops: 0.041000, average # of vertices in loop: 2.000000
+Case 0, length  3, average # of loops: 0.120400, average # of vertices in loop: 2.000000
+Case 0, length  4, average # of loops: 0.246200, average # of vertices in loop: 2.000000
+Case 0, length  5, average # of loops: 0.405600, average # of vertices in loop: 2.000000
+Case 0, length  6, average # of loops: 0.585000, average # of vertices in loop: 2.000000
+Case 0, length  7, average # of loops: 0.808800, average # of vertices in loop: 2.000000
+Case 0, length  8, average # of loops: 1.065200, average # of vertices in loop: 2.000000
+Case 0, length  9, average # of loops: 1.344000, average # of vertices in loop: 2.000000
+Case 0, length 10, average # of loops: 1.661400, average # of vertices in loop: 2.000000
+Case 0, length 11, average # of loops: 1.995000, average # of vertices in loop: 2.000000
+Case 0, length 12, average # of loops: 2.351200, average # of vertices in loop: 2.000000
+Case 0, length 13, average # of loops: 2.750800, average # of vertices in loop: 2.000000
+Case 0, length 14, average # of loops: 3.172600, average # of vertices in loop: 2.000000
+Case 0, length 15, average # of loops: 3.602600, average # of vertices in loop: 2.000000
+Case 0, length 16, average # of loops: 4.071200, average # of vertices in loop: 2.000000
+Case 0, length 17, average # of loops: 4.553200, average # of vertices in loop: 2.000000
+Case 0, length 18, average # of loops: 5.047000, average # of vertices in loop: 2.000000
+Case 0, length 19, average # of loops: 5.579200, average # of vertices in loop: 2.000000
+Case 0, length 20, average # of loops: 6.110400, average # of vertices in loop: 2.000000
+Case 0, length 21, average # of loops: 6.682800, average # of vertices in loop: 2.000000
+Case 0, length 22, average # of loops: 7.263400, average # of vertices in loop: 2.000000
+Case 0, length 23, average # of loops: 7.854600, average # of vertices in loop: 2.000000
+Case 0, length 24, average # of loops: 8.459000, average # of vertices in loop: 2.000000
+Case 0, length 25, average # of loops: 9.078200, average # of vertices in loop: 2.000000
+Case 0, length 26, average # of loops: 9.720800, average # of vertices in loop: 2.000000
+Case 0, length 27, average # of loops: 10.374000, average # of vertices in loop: 2.000000
+Case 0, length 28, average # of loops: 11.043400, average # of vertices in loop: 2.000000
+Case 0, length 29, average # of loops: 11.733400, average # of vertices in loop: 2.000000
+Case 0, length 30, average # of loops: 12.427800, average # of vertices in loop: 2.000000
+Case 1, length  1, average # of loops: 0.000000, average # of vertices in loop: -nan(ind)
+Case 1, length  2, average # of loops: 0.002600, average # of vertices in loop: 2.000000
+Case 1, length  3, average # of loops: 0.007400, average # of vertices in loop: 2.027027
+Case 1, length  4, average # of loops: 0.012600, average # of vertices in loop: 2.031746
+Case 1, length  5, average # of loops: 0.065600, average # of vertices in loop: 2.164634
+Case 1, length  6, average # of loops: 0.081000, average # of vertices in loop: 2.222222
+Case 1, length  7, average # of loops: 0.098200, average # of vertices in loop: 2.293279
+Case 1, length  8, average # of loops: 0.234000, average # of vertices in loop: 2.331624
+Case 1, length  9, average # of loops: 0.341200, average # of vertices in loop: 2.483587
+Case 1, length 10, average # of loops: 0.515600, average # of vertices in loop: 2.612878
+Case 1, length 11, average # of loops: 0.739600, average # of vertices in loop: 2.667117
+Case 1, length 12, average # of loops: 0.924000, average # of vertices in loop: 2.829654
+Case 1, length 13, average # of loops: 1.139600, average # of vertices in loop: 3.006845
+Case 1, length 14, average # of loops: 1.471000, average # of vertices in loop: 3.087831
+Case 1, length 15, average # of loops: 1.619200, average # of vertices in loop: 3.188118
+Case 1, length 16, average # of loops: 1.781200, average # of vertices in loop: 3.289805
+Case 1, length 17, average # of loops: 2.222600, average # of vertices in loop: 3.324305
+Case 1, length 18, average # of loops: 2.442000, average # of vertices in loop: 3.449222
+Case 1, length 19, average # of loops: 2.678400, average # of vertices in loop: 3.573178
+Case 1, length 20, average # of loops: 3.232000, average # of vertices in loop: 3.603651
+Case 1, length 21, average # of loops: 3.723800, average # of vertices in loop: 3.795102
+Case 1, length 22, average # of loops: 4.304400, average # of vertices in loop: 3.950237
+Case 1, length 23, average # of loops: 4.962200, average # of vertices in loop: 3.960098
+Case 1, length 24, average # of loops: 5.560200, average # of vertices in loop: 4.151254
+Case 1, length 25, average # of loops: 6.263000, average # of vertices in loop: 4.204439
+Case 1, length 26, average # of loops: 6.702800, average # of vertices in loop: 4.336188
+Case 1, length 27, average # of loops: 7.425400, average # of vertices in loop: 4.467530
+Case 1, length 28, average # of loops: 7.913600, average # of vertices in loop: 4.596467
+Case 1, length 29, average # of loops: 8.634600, average # of vertices in loop: 4.762444
+Case 1, length 30, average # of loops: 9.388600, average # of vertices in loop: 4.949513
+Case 2, length  1, average # of loops: 0.000000, average # of vertices in loop: -nan(ind)
+Case 2, length  2, average # of loops: 0.001800, average # of vertices in loop: 2.000000
+Case 2, length  3, average # of loops: 0.047200, average # of vertices in loop: 2.055085
+Case 2, length  4, average # of loops: 0.056800, average # of vertices in loop: 2.123239
+Case 2, length  5, average # of loops: 0.068800, average # of vertices in loop: 2.159884
+Case 2, length  6, average # of loops: 0.135200, average # of vertices in loop: 2.300296
+Case 2, length  7, average # of loops: 0.156800, average # of vertices in loop: 2.344388
+Case 2, length  8, average # of loops: 0.180600, average # of vertices in loop: 2.410853
+Case 2, length  9, average # of loops: 0.328000, average # of vertices in loop: 2.466463
+Case 2, length 10, average # of loops: 0.374000, average # of vertices in loop: 2.544385
+Case 2, length 11, average # of loops: 0.514800, average # of vertices in loop: 2.725719
+Case 2, length 12, average # of loops: 0.579800, average # of vertices in loop: 2.817178
+Case 2, length 13, average # of loops: 0.821600, average # of vertices in loop: 2.928676
+Case 2, length 14, average # of loops: 0.919800, average # of vertices in loop: 3.035225
+Case 2, length 15, average # of loops: 1.038200, average # of vertices in loop: 3.145637
+Case 2, length 16, average # of loops: 1.314800, average # of vertices in loop: 3.362945
+Case 2, length 17, average # of loops: 1.631800, average # of vertices in loop: 3.583405
+Case 2, length 18, average # of loops: 1.995400, average # of vertices in loop: 3.802546
+Case 2, length 19, average # of loops: 2.223200, average # of vertices in loop: 3.939727
+Case 2, length 20, average # of loops: 2.678600, average # of vertices in loop: 4.177779
+Case 2, length 21, average # of loops: 2.966800, average # of vertices in loop: 4.321626
+Case 2, length 22, average # of loops: 3.580400, average # of vertices in loop: 4.500614
+Case 2, length 23, average # of loops: 3.928400, average # of vertices in loop: 4.658232
+Case 2, length 24, average # of loops: 4.307000, average # of vertices in loop: 4.808080
+Case 2, length 25, average # of loops: 4.960000, average # of vertices in loop: 5.021411
+Case 2, length 26, average # of loops: 5.412800, average # of vertices in loop: 5.188331
+Case 2, length 27, average # of loops: 5.876800, average # of vertices in loop: 5.346515
+Case 2, length 28, average # of loops: 6.680000, average # of vertices in loop: 5.487964
+Case 2, length 29, average # of loops: 7.450600, average # of vertices in loop: 5.695058
+Case 2, length 30, average # of loops: 8.004000, average # of vertices in loop: 5.848326
+Case 3, length  1, average # of loops: 0.000000, average # of vertices in loop: -nan(ind)
+Case 3, length  2, average # of loops: 0.001000, average # of vertices in loop: 2.000000
+Case 3, length  3, average # of loops: 0.004400, average # of vertices in loop: 2.045455
+Case 3, length  4, average # of loops: 0.010800, average # of vertices in loop: 2.111111
+Case 3, length  5, average # of loops: 0.016800, average # of vertices in loop: 2.095238
+Case 3, length  6, average # of loops: 0.025200, average # of vertices in loop: 2.134921
+Case 3, length  7, average # of loops: 0.038800, average # of vertices in loop: 2.180412
+Case 3, length  8, average # of loops: 0.051800, average # of vertices in loop: 2.193050
+Case 3, length  9, average # of loops: 0.071400, average # of vertices in loop: 2.240896
+Case 3, length 10, average # of loops: 0.091200, average # of vertices in loop: 2.285088
+Case 3, length 11, average # of loops: 0.116800, average # of vertices in loop: 2.330479
+Case 3, length 12, average # of loops: 0.144200, average # of vertices in loop: 2.382802
+Case 3, length 13, average # of loops: 0.177000, average # of vertices in loop: 2.438418
+Case 3, length 14, average # of loops: 0.215200, average # of vertices in loop: 2.473978
+Case 3, length 15, average # of loops: 0.372200, average # of vertices in loop: 2.783450
+Case 3, length 16, average # of loops: 0.437400, average # of vertices in loop: 2.882030
+Case 3, length 17, average # of loops: 0.508400, average # of vertices in loop: 2.982691
+Case 3, length 18, average # of loops: 0.787600, average # of vertices in loop: 3.343321
+Case 3, length 19, average # of loops: 0.908000, average # of vertices in loop: 3.493392
+Case 3, length 20, average # of loops: 1.052200, average # of vertices in loop: 3.644174
+Case 3, length 21, average # of loops: 1.473800, average # of vertices in loop: 4.015063
+Case 3, length 22, average # of loops: 1.690400, average # of vertices in loop: 4.186820
+Case 3, length 23, average # of loops: 2.295000, average # of vertices in loop: 4.384052
+Case 3, length 24, average # of loops: 2.579400, average # of vertices in loop: 4.541211
+Case 3, length 25, average # of loops: 3.285200, average # of vertices in loop: 4.716486
+Case 3, length 26, average # of loops: 3.993800, average # of vertices in loop: 5.002905
+Case 3, length 27, average # of loops: 4.740600, average # of vertices in loop: 5.256423
+Case 3, length 28, average # of loops: 5.530600, average # of vertices in loop: 5.466098
+Case 3, length 29, average # of loops: 6.377000, average # of vertices in loop: 5.539000
+Case 3, length 30, average # of loops: 6.915800, average # of vertices in loop: 5.711212
