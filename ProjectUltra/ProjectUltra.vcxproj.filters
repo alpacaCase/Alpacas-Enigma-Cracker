@@ -54,9 +54,6 @@
     <ClCompile Include="src\BombeAttack\Bombe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CipherAttack\Quadgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Testing\LoopsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BombeAttack\Bombe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CipherAttack\Quadgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\LoopsTest.h">

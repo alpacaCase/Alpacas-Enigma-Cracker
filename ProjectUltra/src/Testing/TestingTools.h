@@ -5,8 +5,7 @@
 #include "../Enigma/Enigma.h"
 
 /*
-Compares to number vectors, if they are identical returns -1 otherwise returns index where they first deviate
-If testnumbers is lower thn
+Compares two number vectors, if they are identical returns -1 otherwise returns index where they first deviate
 */
 int compareNumbersPassFail(std::vector<int> plainnumbers, std::vector<int> testnumbers);
 

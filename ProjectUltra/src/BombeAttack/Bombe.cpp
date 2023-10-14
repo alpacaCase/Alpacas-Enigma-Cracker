@@ -7,14 +7,10 @@
 #include "Bombe.h"
 #include "../Enigma/Enigma.h"
 #include "CipherGraph.h"
-#include "../CipherAttack/CrackingTools.h"
-#include "../CipherAttack//Quadgram.h"
 #include "../UI/UI.h"
 
 using namespace std;
 
-//Vector to store quadgram scores
-vector<vector<vector<vector<double>>>> quadgrams;
 
 /*
 Notes:
