@@ -50,7 +50,7 @@ void readSetting(string settingsString, enigmaSetting& setting)
 
 void selfTest()
 {
-    cout << "\nSELF TEST\n\n";
+    cout << "\nSelf Test\n\n";
     
     //Load in plaintext and settings
     string path = "Data/SelfTestData/";

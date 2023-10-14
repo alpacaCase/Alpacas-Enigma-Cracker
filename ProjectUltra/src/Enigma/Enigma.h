@@ -28,20 +28,19 @@ struct plugboard
 
 /*
 reflector stores reflector mapping and uses it to code ints
-In the case of b-thin and c-thin reflectors, reflector also stores the fourth rotors
+In the case of b-thin and c-thin reflectors, reflector also stores the fourth rotors as these do not move
 */
 struct reflector
 {
     //Mapping is an array that maps input int (index) to output int (value)
     int mapping[26];
 
-
     /*
     REQUIRED sets up reflector
         relflectorType - 'A'/'B'/'C'/'b'/'c' selects reflector type, lower case indicates thin reflectors and requires beta or gamma rotors
         rotorType - 'T'/'G' additional fourth rotors type, ignored if not thin reflector
         rotorPosition - additional rotors position, ignored if not thin reflector
-        ringSetting - additional rotors ring setting, note this is entriely redundant for the fourth rotors here so for cracking should not be used as a variable, ignored if not thin reflector
+        ringSetting - additional rotors ring setting, note this is redundant for the fourth rotors here so for cracking should not be used as a variable, ignored if not thin reflector
     */
     void set(char reflectorType, char rotorType, int rotorPosition, int ringSetting);
 
@@ -91,7 +90,7 @@ struct rotor
 };
 
 /*
-Lightweight struct to hold a setting and 
+Lightweight struct to hold a setting
 */
 struct enigmaSetting
 {
@@ -104,7 +103,7 @@ struct enigmaSetting
     double eval;
 
     /*
-    Logs the setting
+    Logs the setting in record
     */
     void log(logbook& record, bool includeEval = true);
 };
@@ -123,7 +122,7 @@ struct enigma
 
 
     /*
-   REQUIRED sets enigma machine to hese settings
+   REQUIRED sets enigma machine to these settings
    */
     void set(enigmaSetting);
 

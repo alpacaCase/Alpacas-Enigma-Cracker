@@ -7,8 +7,8 @@
 #include "Bombe.h"
 #include "../Enigma/Enigma.h"
 #include "CipherGraph.h"
-#include "../CipherAttack/CrackingTools.h"
-#include "../CipherAttack//Quadgram.h"
+#include "../CipherAttack/Quadgram.h"
+#include "../CipherAttack/GenerateArrangements.h"
 #include "../UI/UI.h"
 
 using namespace std;
@@ -615,7 +615,7 @@ vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertex
 
 	//Generate possible arrangements
 	if (liteLogging) cout << "Generating search space\n\n";
-	vector<array<int, 5>> arrangements = generatePossibleArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
+	vector<array<int, 5>> arrangements = generateArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
 
 	//Generate menu
 	if (liteLogging) cout << "Generating menu\n\n";

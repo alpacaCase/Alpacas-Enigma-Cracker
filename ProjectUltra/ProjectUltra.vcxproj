@@ -144,6 +144,7 @@
     <ClCompile Include="src\BombeAttack\CipherGraph.cpp" />
     <ClCompile Include="src\CipherAttack\CipherAttack.cpp" />
     <ClCompile Include="src\CipherAttack\Crack.cpp" />
+    <ClCompile Include="src\CipherAttack\GenerateArrangements.cpp" />
     <ClCompile Include="src\CipherAttack\IOC.cpp" />
     <ClCompile Include="src\CipherAttack\Quadgram.cpp" />
     <ClCompile Include="src\Enigma\Enigma.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\BombeAttack\CipherGraph.h" />
     <ClInclude Include="src\CipherAttack\CipherAttack.h" />
     <ClInclude Include="src\CipherAttack\Crack.h" />
+    <ClInclude Include="src\CipherAttack\GenerateArrangements.h" />
     <ClInclude Include="src\CipherAttack\IOC.h" />
     <ClInclude Include="src\CipherAttack\Quadgram.h" />
     <ClInclude Include="src\Enigma\Enigma.h" />

@@ -6,6 +6,7 @@
 
 #include "Crack.h"
 #include "IOC.h"
+#include "GenerateArrangements.h"
 #include "../UI/UI.h"
 #include "../Enigma/Enigma.h"
 
@@ -30,48 +31,9 @@ void selectBest(int n, vector<enigmaSetting>& settings)
 }
 
 /*
-Function takes vectors of all possibilities for each rotors/reflector in arrangements
-Returns vector of all arrangments without any rotors being used twice
-!!!Must have one extra rotors possibility even if not using thin reflectors!!!
-Array has form {right rotors, middle rotors, left rotors, extra rotors, reflector}
-*/
-vector<array<int, 5>> generatePossibleArrangements(vector<int> reflectorPossibilities, vector<int> extraPossibilities, vector<int> zeroPossibilities, vector<int> onePossibilities, vector<int> twoPossibilities)
-{
-	array<int, 5> currentArrangement = { 0,0,0,0,0 };
-	vector<array<int, 5>> result;
-	bool noCollision;
-
-	//Loop through all possible combinations
-	for (unsigned int i = 0; i < reflectorPossibilities.size(); i++) for (unsigned int j = 0; j < extraPossibilities.size(); j++) for (unsigned int k = 0; k < zeroPossibilities.size(); k++)
-	{
-		for (unsigned int l = 0; l < onePossibilities.size(); l++) for (unsigned int m = 0; m < twoPossibilities.size(); m++)
-		{
-			//Create arrangment
-			currentArrangement[4] = reflectorPossibilities[i];
-			currentArrangement[3] = extraPossibilities[j];
-			currentArrangement[2] = zeroPossibilities[k];
-			currentArrangement[1] = onePossibilities[l];
-			currentArrangement[0] = twoPossibilities[m];
-
-			//Check if any rotors used twice
-			noCollision = true;
-			for (int x = 0; x < 5; x++) for (int y = x + 1; y < 5; y++)
-			{
-				if (currentArrangement[x] == currentArrangement[y]) noCollision = false;
-			}
-			//Also remove extra arrangments of fourth rotors when not a thin reflector
-			if (j > 0 && !(reflectorPossibilities[i] == 'b' || reflectorPossibilities[i] == 'c')) noCollision = false;
-			if (noCollision) result.push_back(currentArrangement);
-		}
-	}
-	return result;
-}
-
-/*
-Function acts as single thread to perform a positions, setting or plug search
+Function acts as single thread to perform a positions, setting or plug search as dictated by instructions
 	computeLock prevents computed being accessed by two threads
 	logLock stops two threads adding to log at once
-	computed is true is the arrangement at that index has already been analysed
 */
 void searchThread(array<int, 2>& instructions, mutex& computeLock, mutex& logLock, vector<int>& ciphernumbers, vector<enigmaSetting>& settings, logbook& record)
 {
@@ -117,11 +79,10 @@ void searchThread(array<int, 2>& instructions, mutex& computeLock, mutex& logLoc
 }
 
 /*
-Function creates necessary threads to perform a particular search
+Function creates necessary threads to perform a particular search, defined by instructions array
 	instructions: 
-		{[V-Verbose, logs everything to console/L-Lite, logs only some things to console/S-Silent, no console logging]
-		 [I-Index of conicidience evaluations]
-		 [O-Search positions/S-Search settings/U-Search plugs]}
+		{[Type of evaluations: I-Index of conicidience evaluations]
+		 [Type of search: O-Search positions/S-Search settings/U-Search plugs]}
 */
 void crackThreadHandler(array<int, 2>& instructions, vector<int>& ciphernumbers, vector<enigmaSetting>& settings, logbook& record)
 {
@@ -159,7 +120,7 @@ vector<int> crack(vector<array<array<int,2>, 3>> searchInstructions, vector<int>
 		
 	//Generate possible arrangements
 	record.log("Generating search space");
-	vector<array<int, 5>> arrangements = generatePossibleArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
+	vector<array<int, 5>> arrangements = generateArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
 
 	//Prepare settings
 	vector<enigmaSetting> settings;

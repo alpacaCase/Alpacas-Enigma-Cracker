@@ -7,11 +7,13 @@
 
 using namespace std;
 
+/*
+Turns a string of 26 uppercase letters into a int[26] mapping array
+*/
 void stringToMapping(string stringMap, int mapping[])
 {
     for (int i = 0; i < 26; i++) mapping[i] = stringMap[i] - 65;
 }
-
 
 void plugboard::set(vector<array<int, 2>>& plug)
 {

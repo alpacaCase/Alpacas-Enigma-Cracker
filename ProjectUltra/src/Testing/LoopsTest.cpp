@@ -30,7 +30,7 @@ void loopsTest()
 	int n = 10000;
 
 	cout << "\nLoops Test\n\n";
-	cout << "This program tests the average number of loops obtained with various plaintext lengths and contents\n\n";
+	cout << "This program tests the average number of loops (and their average length) generated in the \"menus\" when different texts are encrypted with random settings\n";
 
 	for (unsigned int i = 0; i < strings.size(); i++)
 	{

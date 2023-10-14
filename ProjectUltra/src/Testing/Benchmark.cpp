@@ -10,8 +10,11 @@ using namespace std;
 
 void benchmark()
 {
+	cout << "\nCipher Text Only Benchmark\n\n";
+	cout << "This benchmark measures the performance, both speed and accuracy, of the ciphertext only attack\n";
+
 	//Get benchmark settings
-	cout << "\nEnter number of settings to generate: ";
+	cout << "Enter number of settings to generate: ";
 	int n = getNumber(0, 10000);
 
 	cout << "Select settings space A - Army or Airforce M3 / N - M3 naval enigma (i.e. with 8 possible rotors) / F - M4 four rotor enigma: ";

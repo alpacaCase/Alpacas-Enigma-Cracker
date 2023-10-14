@@ -32,7 +32,7 @@ vector<enigmaSetting> genRandomSettings(int n, vector<int> reflectorPossibilites
         tempSetting.reflector[2] = posDist(gen);
         tempSetting.reflector[2] = posDist(gen);
 
-        //Generate rotors, settings and positions
+        //Generate rotors taking care not to chose 1 twice
         bool rotorAlreadyChosen[9] = { 0 };
         for (int i = 0; i < 3; i++)
         {
@@ -49,7 +49,7 @@ vector<enigmaSetting> genRandomSettings(int n, vector<int> reflectorPossibilites
             tempSetting.rotors[i][2] = posDist(gen);
         }
 
-        //Generate plugs
+        //Generate plugs taking care not to plug two cables into one letter
         bool plugAlreadyChosen[26] = { 0 };
         for (int i = 0; i < numberOfPlugs; i++)
         {

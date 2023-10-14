@@ -21,7 +21,7 @@ void cipherAttack()
 	record.printingLevel = 'D';
 
 	//Get ciphernumbers
-	cout << "\nCIPHERTEXT ONLY ATTACK\n\n";
+	cout << "\nCiphertext only attack\n\n";
 	cout << "Enter ciphertext filename: ";
 	string ciphertext = getUserFile();
 	ciphernumbers = stringToNumbers(ciphertext);
