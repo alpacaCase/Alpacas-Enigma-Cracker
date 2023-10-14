@@ -3,6 +3,7 @@
 #include "CipherAttack.h"
 #include "Crack.h"
 #include "../UI/UI.h"
+#include "../UI/Log.h"
 
 using namespace std;
 
@@ -14,9 +15,11 @@ void cipherAttack()
 	vector<int> extraPossibilities;
 	vector<int> rotorPossibilities;
 	vector<array<int, 2>> startingPlugs = {};
-	char logging = 'L';
 	string plaintext;
 	
+	logbook record;
+	record.printingLevel = 'D';
+
 	//Get ciphernumbers
 	cout << "\nCIPHERTEXT ONLY ATTACK\n\n";
 	cout << "Enter ciphertext filename: ";
@@ -50,7 +53,7 @@ void cipherAttack()
 		break;
 	}
 
-	//Get extra rotor possibilities
+	//Get extra rotors possibilities
 	if (option > 90)
 	{
 		cout << "Select extra rotor possibilities B - Beta rotor only / G - Gamma rotor only / A - Both: ";
@@ -74,7 +77,7 @@ void cipherAttack()
 		extraPossibilities = { 'T' };
 	}
 
-	//Get rotor possibilities
+	//Get rotors possibilities
 	cout << "Select rotor possibilities A - Only 3 rotors available / B - Only 5 rotors available / C - 8 rotors available: ";
 	options = { 'A','B','C' };
 	option = getOption(options);
@@ -132,7 +135,8 @@ void cipherAttack()
 
 	cout << "\n";
 
-	plaintext = formatForOutput(numberVectorToString(crack(searchInstructions, ciphernumbers, reflectorPossibilities, extraPossibilities, rotorPossibilities, rotorPossibilities, rotorPossibilities, startingPlugs, logging)));
-
+	//Crack and format
+	plaintext = formatForOutput(numberVectorToString(crack(searchInstructions, ciphernumbers, reflectorPossibilities, extraPossibilities, rotorPossibilities, rotorPossibilities, rotorPossibilities, startingPlugs, record)));
+	cout << record.logPoints[0].descripton;
 	cout << "Plaintext is:\n" << plaintext << "\n\n";
 }

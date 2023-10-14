@@ -41,7 +41,7 @@ Function returns the entire contents of a file as a string, filename is taken as
 std::string getUserFile();
 
 /*
-Function returns a string only containing letters in dirty string and all letters as uppercase
+Function returns a string only containing the letters in dirty string and all letters as uppercase
 */
 std::string cleanString(std::string dirtyString);
 

@@ -2,7 +2,6 @@
 #include <array>
 
 #include "TestingTools.h"
-#include "../Enigma/Enigma.h"
 
 using namespace std;
 
@@ -12,12 +11,11 @@ int compareNumbersPassFail(vector<int> plainnumbers, vector<int> testnumbers)
     return -1;
 }
 
-vector<vector<int>> encryptRandoms(int n, vector<int> plainnumbers, vector<int> reflectorPossibilites, vector<int> extraPossibilities, vector<int> rotorPossibilities, int numberOfPugs, unsigned int seed)
+vector<enigmaSetting> genRandomSettings(int n, vector<int> reflectorPossibilites, vector<int> extraPossibilities, vector<int> rotorPossibilities, int numberOfPlugs, unsigned int seed)
 {
-    if (numberOfPugs > 13) throw 21;
+    vector<enigmaSetting> result;
 
-    vector<vector<int>> result;
-
+    //Set up random distributions
     mt19937 gen(seed);
     uniform_int_distribution<int> reflectorDist(0, reflectorPossibilites.size() - 1);
     uniform_int_distribution<int> extraDist(0, extraPossibilities.size() - 1);
@@ -26,35 +24,34 @@ vector<vector<int>> encryptRandoms(int n, vector<int> plainnumbers, vector<int> 
 
     for (; n > 0; n--)
     {
+        enigmaSetting tempSetting;
+
         //Generator reflector and extra
-        int reflectorSetting[4];
-        reflectorSetting[0] = reflectorPossibilites[reflectorDist(gen)];
-        reflectorSetting[1] = extraPossibilities[extraDist(gen)];
-        reflectorSetting[2] = posDist(gen);
-        reflectorSetting[2] = posDist(gen);
+        tempSetting.reflector[0] = reflectorPossibilites[reflectorDist(gen)];
+        tempSetting.reflector[1] = extraPossibilities[extraDist(gen)];
+        tempSetting.reflector[2] = posDist(gen);
+        tempSetting.reflector[2] = posDist(gen);
 
         //Generate rotors, settings and positions
-        int rotorSetting[3][3];
         bool rotorAlreadyChosen[9] = { 0 };
         for (int i = 0; i < 3; i++)
         {
             while (true)
             {
-                rotorSetting[i][0] = rotorPossibilities[rotorDist(gen)];
-                if (!rotorAlreadyChosen[rotorSetting[i][0]])
+                tempSetting.rotors[i][0] = rotorPossibilities[rotorDist(gen)];
+                if (!rotorAlreadyChosen[tempSetting.rotors[i][0]])
                 {
-                    rotorAlreadyChosen[rotorSetting[i][0]] = true;
+                    rotorAlreadyChosen[tempSetting.rotors[i][0]] = true;
                     break;
                 }
             }
-            rotorSetting[i][1] = posDist(gen);
-            rotorSetting[i][2] = posDist(gen);
+            tempSetting.rotors[i][1] = posDist(gen);
+            tempSetting.rotors[i][2] = posDist(gen);
         }
 
         //Generate plugs
-        vector<array<int, 2>> plug;
         bool plugAlreadyChosen[26] = { 0 };
-        for (int i = 0; i < numberOfPugs; i++)
+        for (int i = 0; i < numberOfPlugs; i++)
         {
             array<int, 2> tempPlug;
             while (true)
@@ -75,12 +72,29 @@ vector<vector<int>> encryptRandoms(int n, vector<int> plainnumbers, vector<int> 
                     break;
                 }
             }
-            plug.push_back(tempPlug);
+            tempSetting.plug.push_back(tempPlug);
         }
 
+        //Add to final vector
+        result.push_back(tempSetting);
+    }
+
+    return result;
+}
+
+vector<vector<int>> encryptRandoms(int n, vector<int> plainnumbers, vector<int> reflectorPossibilites, vector<int> extraPossibilities, vector<int> rotorPossibilities, int numberOfPlugs, unsigned int seed)
+{
+    if (numberOfPlugs > 13) throw 21;
+
+    vector<vector<int>> result;
+    
+    vector<enigmaSetting> settings = genRandomSettings(n, reflectorPossibilites, extraPossibilities, rotorPossibilities, numberOfPlugs, seed);
+
+    for (unsigned int i = 0; i < settings.size(); i++)
+    {
         //Code
         enigma machine;
-        machine.initialise(rotorSetting, reflectorSetting, plug);
+        machine.set(settings[i]);
         vector<int> ciphernumbers = plainnumbers;
         machine.code(ciphernumbers);
         result.push_back(ciphernumbers);

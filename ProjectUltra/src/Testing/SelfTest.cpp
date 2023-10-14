@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void readSetting(string settingsString, int rotorSettings[][3], int reflectorSettings[], vector<array<int, 2>>& plug)
+void readSetting(string settingsString, enigmaSetting& setting)
 {
     istringstream iss(settingsString);
     string tempString;
@@ -22,29 +22,29 @@ void readSetting(string settingsString, int rotorSettings[][3], int reflectorSet
         for (int x = 0; x < 3; x++)
         {
             getline(iss, tempString, ' ');
-            rotorSettings[i][x] = stoi(tempString);
+            setting.rotors[i][x] = stoi(tempString);
         }
     }
 
     //Reflector setting
     getline(iss, tempString, ' ');
-    reflectorSettings[0] = tempString[0];
+    setting.reflector[0] = tempString[0];
     getline(iss, tempString, ' ');
-    reflectorSettings[1] = tempString[0];
+    setting.reflector[1] = tempString[0];
     getline(iss, tempString, ' ');
-    reflectorSettings[2] = stoi(tempString);
+    setting.reflector[2] = stoi(tempString);
     getline(iss, tempString, ' ');
-    reflectorSettings[3] = stoi(tempString);
+    setting.reflector[3] = stoi(tempString);
 
     //Plug setting
     array<int, 2> tempArray;
-    plug.clear();
+    setting.plug.clear();
     while (getline(iss, tempString, ' '))
     {
         tempArray[0] = stoi(tempString);
         getline(iss, tempString, ' ');
         tempArray[1] = stoi(tempString);
-        plug.push_back(tempArray);
+        setting.plug.push_back(tempArray);
     }
 }
 
@@ -60,9 +60,7 @@ void selfTest()
     string ciphertextPath;
 
     //Set up machine and variables
-    int rotorSetting[3][3];
-    int reflectorSetting[4];
-    vector<array<int, 2>> plug;
+    enigmaSetting setting;
     enigma machine;
     int passFail;
     int testIndex = 0;
@@ -73,7 +71,6 @@ void selfTest()
     string settingString;
     string fileName;
     string result;
-
 
     //Find plain text file
     getline(settingsFile, settingString);
@@ -91,15 +88,15 @@ void selfTest()
         ciphernumbers = stringToNumbers(readFile(ciphertextPath));
 
         //Copy and encode
-        readSetting(settingString, rotorSetting, reflectorSetting, plug);
-        machine.initialise(rotorSetting, reflectorSetting, plug);
+        readSetting(settingString, setting);
+        machine.set(setting);
         machine.code(ciphernumbers);
 
         //Test
         passFail = compareNumbersPassFail(plainnumbers, ciphernumbers);
         if (passFail != -1)
         {
-            cout << "Test " << testIndex << " FAILLED\nFirst deviation at index " << passFail << "\nPress enter to continue...";
+            cout << "Test " << testIndex << " FAILLED\nFirst deviation at index " << passFail << "\nPress Y to continue...";
             numberOfFails++;
             cin >> settingString;
         }

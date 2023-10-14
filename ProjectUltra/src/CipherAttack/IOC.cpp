@@ -2,6 +2,8 @@
 #include "CrackingTools.h"
 #include "../Enigma/Enigma.h"
 
+#include <iostream>
+
 using namespace std;
 
 /*
@@ -27,93 +29,137 @@ double IOC(vector<int>& numbers)
 	return result;
 }
 
-void searchPositionsIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, array<int, 4>& bestPosition, array<int, 4>& setting, vector<array<int, 2>>& plug, double& eval)
+void searchPositionsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 {
-	eval = 0;
+	setting.eval = 0.0;
+	array<int, 4> bestPosition;
 	double currentIOC;
 	vector<int> plainnumbers;
 	plainnumbers.reserve(ciphernumbers.size());
 	enigma machine;
 
-	//Load starting settings
-	int rotorSetting[3][3];
-	int reflectorSetting[4];
-	array<int, 4> startPosition = { 0,0,0,0 };
-	apsToSetting(arrangement, startPosition, setting, rotorSetting, reflectorSetting);
-
-	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c')
+	//4 rotor
+	if (setting.reflector[0] == 'b' || setting.reflector[0] == 'c')
 	{
-		for (reflectorSetting[2] = 0; reflectorSetting[2] < 26; reflectorSetting[2]++) for (rotorSetting[2][1] = 0; rotorSetting[2][1] < 26; rotorSetting[2][1]++) 
-			for (rotorSetting[1][1] = 0; rotorSetting[1][1] < 26; rotorSetting[1][1]++) for (rotorSetting[0][1] = 0; rotorSetting[0][1] < 26; rotorSetting[0][1]++)
+		for (setting.reflector[2] = 0; setting.reflector[2] < 26; setting.reflector[2]++) for (setting.rotors[2][1] = 0; setting.rotors[2][1] < 26; setting.rotors[2][1]++) 
+			for (setting.rotors[1][1] = 0; setting.rotors[1][1] < 26; setting.rotors[1][1]++) for (setting.rotors[0][1] = 0; setting.rotors[0][1] < 26; setting.rotors[0][1]++)
 		{
 			//Copy and decrypt
 			plainnumbers = ciphernumbers;
-			machine.initialise(rotorSetting, reflectorSetting, plug);
+			machine.set(setting);
 			machine.code(plainnumbers);
 
-			//Evaluate
+			//Evaluate and if better store result
 			currentIOC = IOC(plainnumbers);
-			if (currentIOC > eval)
+			if (currentIOC > setting.eval)
 			{
-				eval = currentIOC;
-				bestPosition[2] = rotorSetting[0][1];
-				bestPosition[1] = rotorSetting[1][1];
-				bestPosition[0] = rotorSetting[2][1];
-				bestPosition[3] = reflectorSetting[2];
+				setting.eval = currentIOC;
+				bestPosition[0] = setting.rotors[0][1];
+				bestPosition[1] = setting.rotors[1][1];
+				bestPosition[2] = setting.rotors[2][1];
+				bestPosition[3] = setting.reflector[2];
 			}
 		}
+
 	}
+	//3 rotor
 	else
 	{
-		for (rotorSetting[2][1] = 0; rotorSetting[2][1] < 26; rotorSetting[2][1]++) for (rotorSetting[1][1] = 0; rotorSetting[1][1] < 26; rotorSetting[1][1]++)
-			for (rotorSetting[0][1] = 0; rotorSetting[0][1] < 26; rotorSetting[0][1]++)
+		for (setting.rotors[2][1] = 0; setting.rotors[2][1] < 26; setting.rotors[2][1]++) for (setting.rotors[1][1] = 0; setting.rotors[1][1] < 26; setting.rotors[1][1]++)
+			for (setting.rotors[0][1] = 0; setting.rotors[0][1] < 26; setting.rotors[0][1]++)
 		{
 			//Copy and decrypt
 			plainnumbers = ciphernumbers;
-			machine.initialise(rotorSetting, reflectorSetting, plug);
+			machine.set(setting);
 			machine.code(plainnumbers);
 
-			//Evaluate
+			//Evaluate and if better store result
 			currentIOC = IOC(plainnumbers);
-			if (currentIOC > eval)
+			if (currentIOC > setting.eval)
 			{
-				eval = currentIOC;
-				bestPosition[2] = rotorSetting[0][1];
-				bestPosition[1] = rotorSetting[1][1];
-				bestPosition[0] = rotorSetting[2][1];
-				bestPosition[3] = reflectorSetting[2];
+				setting.eval = currentIOC;
+				bestPosition[0] = setting.rotors[0][1];
+				bestPosition[1] = setting.rotors[1][1];
+				bestPosition[2] = setting.rotors[2][1];
+				bestPosition[3] = setting.reflector[2];
 			}
 		}
 	}
+
+	setting.rotors[0][1] = bestPosition[0];
+	setting.rotors[1][1] = bestPosition[1];
+	setting.rotors[2][1] = bestPosition[2];
+	setting.reflector[2] = bestPosition[3];
 }
 
-void searchSettingsIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, array<int, 4>& bestPosition, array<int, 4>& bestSetting, vector<array<int, 2>>& plug, double& eval)
+void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 {
-	eval = 0;
+	setting.eval = 0;
 	double currentIOC;
 	vector<int> plainnumbers;
 	plainnumbers.reserve(ciphernumbers.size());
 	enigma machine;
+	array<int, 5> bestSettings;
 
-	//load starting settings
-	int rotorSetting[3][3];
-	int reflectorSetting[4];
-	array<int, 4> startSetting = { 0,bestSetting[1],bestSetting[2],bestSetting[3] };
-	array<int, 4> startPosition = { 0,0,bestPosition[2],bestPosition[3] };
-	apsToSetting(arrangement, startPosition, startSetting, rotorSetting, reflectorSetting);
+	setting.rotors[0][1] = (setting.rotors[0][1] + 25) % 26;
+	setting.rotors[1][1] = (setting.rotors[1][1] + 25) % 26;
 
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			for (int k = 0; k < 26; k++)
+			{
+				for (int l = 0; l < 26; l++)
+				{
+					//copy and decrypt
+					plainnumbers = ciphernumbers;
+					machine.set(setting);
+					machine.code(plainnumbers);
+
+					currentIOC = IOC(plainnumbers);
+
+					if (currentIOC > setting.eval)
+					{
+						setting.eval = currentIOC;
+						bestSettings[0] = setting.rotors[0][1];
+						bestSettings[1] = setting.rotors[1][1];
+						bestSettings[2] = setting.rotors[1][2];
+						bestSettings[3] = setting.rotors[2][1];
+						bestSettings[4] = setting.rotors[2][2];
+					}
+
+					setting.rotors[2][1] = (setting.rotors[2][1] + 1) % 26;
+					setting.rotors[2][2] = (setting.rotors[2][2] + 1) % 26;
+				}
+				setting.rotors[1][1] = (setting.rotors[1][1] + 1) % 26;
+				setting.rotors[1][2] = (setting.rotors[1][2] + 1) % 26;
+			}
+			setting.rotors[1][1] = (setting.rotors[1][1] + 1) % 26;
+		}
+		setting.rotors[1][1] = (setting.rotors[1][1] + 23) % 26;
+		setting.rotors[0][1] = (setting.rotors[0][1] + 1) % 26;
+	}
+
+	setting.rotors[0][1] = bestSettings[0];
+	setting.rotors[1][1] = bestSettings[1];
+	setting.rotors[1][2] = bestSettings[2];
+	setting.rotors[2][1] = bestSettings[3];
+	setting.rotors[2][2] = bestSettings[4];
+
+	/*
 	while (true)
 	{
 		//copy and decrypt
 		plainnumbers = ciphernumbers;
-		machine.initialise(rotorSetting, reflectorSetting, plug);
+		machine.set(rotorSetting, reflectorSetting, plug);
 		machine.code(plainnumbers);
 
 		//evaluate
 		currentIOC = IOC(plainnumbers);
-		if (currentIOC > eval)
+		if (currentIOC > setting.eval)
 		{
-			eval = currentIOC;
+			setting.eval = currentIOC;
 			bestSetting[0] = rotorSetting[2][2];
 			bestPosition[0] = rotorSetting[2][1];
 		}
@@ -132,22 +178,20 @@ void searchSettingsIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, a
 
 	}
 
-	eval = 0;
-	startSetting = { bestSetting[0],0,bestSetting[2],bestSetting[3] };
-	startPosition = { bestPosition[0],0,bestPosition[2],bestPosition[3] };
-	apsToSetting(arrangement, startPosition, startSetting, rotorSetting, reflectorSetting);
+	setting.eval = 0;
+
 	while (true)
 	{
 		//copy and decrypt
 		plainnumbers = ciphernumbers;
-		machine.initialise(rotorSetting, reflectorSetting, plug);
+		machine.set(rotorSetting, reflectorSetting, plug);
 		machine.code(plainnumbers);
 
 		//evaluate
 		currentIOC = IOC(plainnumbers);
-		if (currentIOC > eval)
+		if (currentIOC > setting.eval)
 		{
-			eval = currentIOC;
+			setting.eval = currentIOC;
 			bestSetting[1] = rotorSetting[1][2];
 			bestPosition[1] = rotorSetting[1][1];
 		}
@@ -161,9 +205,10 @@ void searchSettingsIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, a
 		}
 
 	}
+	*/
 }
 
-void searchPlugboardIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, array<int, 4>& position, array<int, 4>& setting, vector<array<int, 2>>& plug, double& eval)
+void searchPlugboardIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 {
 	double currentIOC;
 	vector<int> plainnumbers;
@@ -171,18 +216,13 @@ void searchPlugboardIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, 
 	bool noCollision;
 	plainnumbers.reserve(ciphernumbers.size());
 	enigma machine;
-
-	//Load starting settings
-	int rotorSetting[3][3];
-	int reflectorSetting[4];
-	plug.clear();
-	apsToSetting(arrangement, position, setting, rotorSetting, reflectorSetting);
+	setting.plug.clear();
 
 	//Get initial evaluation
 	plainnumbers = ciphernumbers;
-	machine.initialise(rotorSetting, reflectorSetting, plug);
+	machine.set(setting);
 	machine.code(plainnumbers);
-	eval = IOC(plainnumbers);
+	setting.eval = IOC(plainnumbers);
 
 	while (true)
 	{
@@ -191,30 +231,32 @@ void searchPlugboardIOC(vector<int>& ciphernumbers, array<int, 5>& arrangement, 
 		{
 			//Check if i or j are already plugged
 			noCollision = true;
-			for (unsigned int x = 0; x < plug.size(); x++)
+			for (unsigned int x = 0; x < setting.plug.size(); x++)
 			{
-				if (plug[x][0] == i || plug[x][1] == i || plug[x][0] == j || plug[x][1] == j) noCollision = false;
+				if (setting.plug[x][0] == i || setting.plug[x][1] == i || setting.plug[x][0] == j || setting.plug[x][1] == j) noCollision = false;
 			}
+
+			//If not test if it improves score
 			if (noCollision)
 			{
-				plug.push_back({ i,j });
+				setting.plug.push_back({ i,j });
 				plainnumbers = ciphernumbers;
-				machine.initialise(rotorSetting, reflectorSetting, plug);
+				machine.set(setting);
 				machine.code(plainnumbers);
 
 				//Evaluate
 				currentIOC = IOC(plainnumbers);
-				if (currentIOC > eval)
+				if (currentIOC > setting.eval)
 				{
-					eval = currentIOC;
-					bestPair = plug.back();
+					setting.eval = currentIOC;
+					bestPair = setting.plug.back();
 				}
-				plug.pop_back();
+				setting.plug.pop_back();
 			}
 		}
 		
 		//If there is a better pair add it otherwise end loop
 		if (bestPair[1] == 0) break;
-		else plug.push_back(bestPair);
+		else setting.plug.push_back(bestPair);
 	}
 }

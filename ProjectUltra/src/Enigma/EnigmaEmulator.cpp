@@ -31,65 +31,64 @@ void enigmaEmulator()
 	}
 	vector<int> plainnumbers = stringToNumbers(plaintext);
 
-	//Reflector settings
-	int reflectorSetting[4];
+	//Settings
+	enigmaSetting setting;
+
+	//Reflector
 	cout << "\nEnter reflector type (lower case indicates thin relflector) [A/B/C/b/c]: ";
 	options = { 'A', 'B' , 'C', 'b', 'c' };
-	reflectorSetting[0] = getOption(options, false);
-	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c')
+	setting.reflector[0] = getOption(options, false);
+	if (setting.reflector[0] == 'b' || setting.reflector[0] == 'c')
 	{
 		cout << "Enter extra rotor type B - Beta / G - Gamma: ";
 		options = { 'B', 'G' };
-		reflectorSetting[1] = getOption(options);
-		if (reflectorSetting[1] == 'B') reflectorSetting[1] = 'T';
+		setting.reflector[1] = getOption(options);
+		if (setting.reflector[1] == 'B') setting.reflector[1] = 'T';
 	}
 
-	//Rotor settings
-	int rotorSetting[3][3];
+	//Rotor
 	cout << "Enter left rotor type:                       ";
-	rotorSetting[0][0] = getNumber(1, 9);
+	setting.rotors[0][0] = getNumber(1, 9);
 	cout << "Enter middle rotor type:                     ";
-	rotorSetting[1][0] = getNumber(1, 9);
+	setting.rotors[1][0] = getNumber(1, 9);
 	cout << "Enter right rotor type:                      ";
-	rotorSetting[2][0] = getNumber(1, 9);
-	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c')
+	setting.rotors[2][0] = getNumber(1, 9);
+	if (setting.reflector[0] == 'b' || setting.reflector[0] == 'c')
 	{
 		cout << "Enter extra rotor start position:            ";
-		reflectorSetting[2] = getSetting();
+		setting.reflector[2] = getSetting();
 	}
 	cout << "Enter left rotor start position:             ";
-	rotorSetting[0][1] = getSetting();
+	setting.rotors[0][1] = getSetting();
 	cout << "Enter middle rotor start position:           ";
-	rotorSetting[1][1] = getSetting();
+	setting.rotors[1][1] = getSetting();
 	cout << "Enter right rotor start position:            ";
-	rotorSetting[2][1] = getSetting();
-	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c')
+	setting.rotors[2][1] = getSetting();
+	if (setting.reflector[0] == 'b' || setting.reflector[0] == 'c')
 	{
-		cout << "Enter extra rotor ring setting:              ";
-		reflectorSetting[3] = getSetting();
+		setting.reflector[3] = 0;
 	}
 	cout << "Enter left rotor ring setting:               ";
-	rotorSetting[0][2] = getSetting();
+	setting.rotors[0][2] = getSetting();
 	cout << "Enter middle rotor ring setting:             ";
-	rotorSetting[1][2] = getSetting();
+	setting.rotors[1][2] = getSetting();
 	cout << "Enter right rotor ring setting:              ";
-	rotorSetting[2][2] = getSetting();
+	setting.rotors[2][2] = getSetting();
 
-	//Plug settings
-	vector<array<int, 2>> plug = { };
+	//Plug
 	cout << "Enter number of plug pairs:                  ";
-	int plugNumber = getNumber(0,14);
-	while (plugNumber > 0)
+	int numberOfPlugs = getNumber(0,14);
+	while (numberOfPlugs > 0)
 	{
 		cout << "Enter a new plug pair:                       ";
-		getPlug(plug);
-		plugNumber--;
+		getPlug(setting.plug);
+		numberOfPlugs--;
 	}
 
 	//Encrypt
 	cout << "\nEncrypting\n\n";
 	enigma machine;
-	machine.initialise(rotorSetting, reflectorSetting, plug);
+	machine.set(setting);
 	machine.code(plainnumbers);
 	string result = numberVectorToString(plainnumbers);
 	result = formatForOutput(result);

@@ -18,8 +18,8 @@ vector<vector<vector<vector<double>>>> quadgrams;
 
 /*
 Notes:
-setting array takes form {reflector, extra rotor, extra rotor position, extra rotor setting, rotor zero, rotor zero position, rotor zero setting, rotor one...
-arrangement array takes form {rotor two, rotor one, rotor zero, extra rotor, reflector}
+setting array takes form {reflector, extra rotors, extra rotors position, extra rotors setting, rotors zero, rotors zero position, rotors zero setting, rotors one...
+arrangement array takes form {rotors two, rotors one, rotors zero, extra rotors, reflector}
 plugArray[index] is -1 if no knowledge about what index is plugged to, otherwise plugArray[index] is what index is plugged to
 */
 
@@ -137,7 +137,7 @@ void testLoops(unsigned int index, array<int, 26>& currentPlug, deque<array<int,
 
 /*
 Function adds all possible setting and result combinations to possibleSettings and plugs for a given arrangement of rotors and menu
-	fullSearch - if true will also try all possible ring settings for middle rotor, 26x slower, usually not necessary
+	fullSearch - if true will also try all possible ring settings for middle rotors, 26x slower, usually not necessary
 */
 void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrangement, vector<array<int, 13>>& possibleSettings, vector<array<int, 26>>& plugs)
 {
@@ -146,7 +146,7 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 	if (fullSearch) oneSettingStop = 26;
 	else oneSettingStop = 1;
 
-	//Notch positions for each rotor
+	//Notch positions for each rotors
 	vector<vector<int>> notches = { {16}, {4}, {21}, {9}, {25}, {25,12}, {25,12}, {25,12} };
 
 	//Variable to hold settings for machine
@@ -170,7 +170,7 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 	//Calculate cycle length
 	int cycleLength = ((26 / signed(twoNotches.size())) * ((26 / signed(oneNotches.size())) - 1)) + 1;
 
-	//Check if four rotor enigma
+	//Check if four rotors enigma
 	int extraPositionStop;
 	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c') extraPositionStop = 26;
 	else extraPositionStop = 1;
@@ -191,22 +191,22 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 	settingArray[7] = rotorSetting[1][0];
 	settingArray[10] = rotorSetting[2][0];
 
-	//Loop extra rotor position
+	//Loop extra rotors position
 	for (reflectorSetting[2] = 0; reflectorSetting[2] < extraPositionStop; reflectorSetting[2]++)
 	{
 		settingArray[2] = reflectorSetting[2];
 
-		//Loop middle rotor ring setting
+		//Loop middle rotors ring setting
 		for (rotorSetting[1][2] = 0; rotorSetting[1][2] < oneSettingStop; rotorSetting[1][2]++)
 		{
 			settingArray[9] = rotorSetting[1][2];
 
-			//Loop right rotor ring setting
+			//Loop right rotors ring setting
 			for (rotorSetting[2][2] = 0; rotorSetting[2][2] < 26; rotorSetting[2][2]++)
 			{
 				settingArray[12] = rotorSetting[2][2];
 
-				//Loop left rotor position
+				//Loop left rotors position
 				for (rotorSetting[0][1] = 0; rotorSetting[0][1] < 26; rotorSetting[0][1]++)
 				{
 					//Loop through start positions
@@ -218,7 +218,7 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 							rotorSetting[2][1] = twoNotches[j];
 
 							//Build mappings
-							machine.initialise(rotorSetting, reflectorSetting, plug);
+							machine.set(rotorSetting, reflectorSetting, plug);
 							makeMappings(machine, menu.cribLength, mappings, settings);
 
 							//Test loops
@@ -407,7 +407,7 @@ void encodeFromSetttingArray(vector<int>& plainnnumbers, array<int, 13>& setting
 
 	vector<array<int, 2>> plug = plugArrayToPlug(plugArray);
 
-	machine.initialise(rotorSetting, reflectorSetting, plug);
+	machine.set(rotorSetting, reflectorSetting, plug);
 	machine.code(plainnnumbers);
 }
 
@@ -607,15 +607,15 @@ void printSettingArray(array<int,13> setting, array<int,26> plugArray)
 	cout << plugString << "\n\n";
 }
 
-vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertext, vector<int> reflectorPosibilities, vector<int> extraPosibilities, vector<int> zeroPosibilities, vector<int> onePosibilities, 
-	vector<int> twoPosibilities)
+vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertext, vector<int> reflectorPossibilities, vector<int> extraPossibilities, vector<int> zeroPossibilities, vector<int> onePossibilities, 
+	vector<int> twoPossibilities)
 {
 	bool liteLogging = instructions[0] == 'V' || instructions[0] == 'L';
 	bool fullLogging = instructions[0] == 'V';
 
 	//Generate possible arrangements
 	if (liteLogging) cout << "Generating search space\n\n";
-	vector<array<int, 5>> arrangements = generatePossibleArrangements(reflectorPosibilities, extraPosibilities, zeroPosibilities, onePosibilities, twoPosibilities);
+	vector<array<int, 5>> arrangements = generatePossibleArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
 
 	//Generate menu
 	if (liteLogging) cout << "Generating menu\n\n";
@@ -634,7 +634,7 @@ vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertex
 	if (liteLogging) cout << "Found " << menu.loops.size() << " loops\n";
 	if(fullLogging)	cout << menu.debugLoopsString();
 
-	//Declare variables and initialise
+	//Declare variables and set
 	vector<array<int, 13>> possibleSettings;
 	vector<array<int, 26>> plugs;
 

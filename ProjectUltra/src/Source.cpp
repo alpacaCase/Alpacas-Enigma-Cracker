@@ -13,7 +13,7 @@ using namespace std;
 
 int main()
 {
-	cout << "Project Ultra V0.1\n";
+	cout << "Project Ultra V0.2\n";
 	vector<char> options;
 	char option;
 	while (true)

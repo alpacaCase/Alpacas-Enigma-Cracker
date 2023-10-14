@@ -129,7 +129,7 @@ void bombeAttack()
 		break;
 	}
 
-	//Get extra rotor possibilities
+	//Get extra rotors possibilities
 	if (option > 90)
 	{
 		cout << "Select extra rotor possibilities B - Beta rotor only / G - Gamma rotor only / A - Both: ";
@@ -153,7 +153,7 @@ void bombeAttack()
 		extraPossibilities = { 'T' };
 	}
 
-	//Get rotor possibilities
+	//Get rotors possibilities
 	cout << "Select rotor possibilities A - Only 3 rotors available / B - Only 5 rotors available / C - 8 rotors available: ";
 	options = { 'A','B','C' };
 	option = getOption(options);

@@ -26,7 +26,8 @@ void loopsTest()
 	//Output string
 	string output = "";
 
-	int n = 5000;
+	//Number per string-length combination
+	int n = 10000;
 
 	cout << "\nLoops Test\n\n";
 	cout << "This program tests the average number of loops obtained with various plaintext lengths and contents\n\n";

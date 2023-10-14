@@ -7,6 +7,7 @@
 #include "LoopsTest.h"
 #include "../UI/UI.h"
 #include "../Enigma/Enigma.h"
+#include "Benchmark.h"
 
 using namespace std;
 
@@ -14,8 +15,8 @@ void testing()
 {
 	vector<char> options;
 	char option;
-	cout << "Select option S - Self test / L - Loops test: ";
-	options = { 'S', 'L' };
+	cout << "Select option S - Self test / L - Loops test / B - Benchmark: ";
+	options = { 'S', 'L', 'B' };
 	option = getOption(options);
 	switch (option)
 	{
@@ -25,5 +26,7 @@ void testing()
 	case 'L':
 		loopsTest();
 		break;
+	case 'B':
+		benchmark();
 	}
 }

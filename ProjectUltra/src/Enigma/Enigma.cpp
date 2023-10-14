@@ -1,21 +1,19 @@
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 #include "Enigma.h"
+#include "../UI/UI.h"
 
 using namespace std;
 
-/*
-Function takes a string of 26 uppercase letters and turns it into an array of 26 numbers
-stringMap - string of uppercase characters defining the map
-mapping - the size 26 int array to output the map
-*/
 void stringToMapping(string stringMap, int mapping[])
 {
     for (int i = 0; i < 26; i++) mapping[i] = stringMap[i] - 65;
 }
 
 
-void plugboard::initialise(vector<array<int, 2>>& plug)
+void plugboard::set(vector<array<int, 2>>& plug)
 {
     stringToMapping("ABCDEFGHIJKLMNOPQRSTUVWXYZ", mapping);
     for (unsigned int i = 0; i < plug.size(); i++)
@@ -31,9 +29,9 @@ int plugboard::code(int plainNumber)
 }
 
 
-void reflector::initialise(char reflectorType, char rotorType, int rotorPosition, int ringSetting)
+void reflector::set(char reflectorType, char rotorType, int rotorPosition, int ringSetting)
 {
-    //thin reflectors
+    //thin reflectors, remember these are combined with fourth rotors
     if (reflectorType == 'b')
     {
         int reflectorMapping[26];
@@ -50,7 +48,7 @@ void reflector::initialise(char reflectorType, char rotorType, int rotorPosition
             stringToMapping("FSOKANUERHMBTIYCWLQPZXVGJD", rotorMappingFwd);
             stringToMapping("ELPZHAXJNYDRKFCTSIBMGWQVOU", rotorMappingBack);
         }
-        //combine reflector and rotor mappings
+
         for (int i = 0; i < 26; i++)
         {
             mapping[i] = (rotorMappingFwd[(i + rotorPosition - ringSetting + 26) % 26] - rotorPosition + ringSetting + 26) % 26;
@@ -75,7 +73,7 @@ void reflector::initialise(char reflectorType, char rotorType, int rotorPosition
             stringToMapping("FSOKANUERHMBTIYCWLQPZXVGJD", rotorMappingFwd);
             stringToMapping("ELPZHAXJNYDRKFCTSIBMGWQVOU", rotorMappingBack);
         }
-        //combine reflector and rotor mappings
+
         for (int i = 0; i < 26; i++)
         {
             mapping[i] = (rotorMappingFwd[(i + rotorPosition - ringSetting + 26) % 26] - rotorPosition + ringSetting + 26) % 26;
@@ -108,7 +106,7 @@ int reflector::code(int plainNumber)
 }
 
 
-void rotor::initialise(int rotorType, int startPosition, int startRingSetting)
+void rotor::set(int rotorType, int startPosition, int startRingSetting)
 {
     for (int i = 0; i < 26; i++) inNotch[i] = false;
     switch (rotorType)
@@ -178,14 +176,65 @@ int rotor::codeBack(int plainNumber)
     return (mappingBack[(plainNumber + position - ringSetting + 26) % 26] - position + ringSetting + 26) % 26;
 }
 
-
-void enigma::initialise(int rotorSetting[][3], int reflectorSetting[], vector<array<int, 2>>& plug)
+void enigmaSetting::log(logbook& record, bool includeEval)
 {
-    zero.initialise(rotorSetting[0][0], rotorSetting[0][1], rotorSetting[0][2]);
-    one.initialise(rotorSetting[1][0], rotorSetting[1][1], rotorSetting[1][2]);
-    two.initialise(rotorSetting[2][0], rotorSetting[2][1], rotorSetting[2][2]);
-    R.initialise(reflectorSetting[0], reflectorSetting[1], reflectorSetting[2], reflectorSetting[3]);
-    P.initialise(plug);
+    vector<string> rotorNames = { "   I","  II"," III","  IV","   V","  VI"," VII","VIII" };
+    stringstream ss;
+    
+    //4 rotor version
+    if (reflector[0] == 'b' or reflector[0] == 'c')
+    {
+        ss << (char)reflector[0] << "     " << (char)reflector[1] << "  " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
+        record.log(ss.str());
+        stringstream().swap(ss);
+        ss << "     " << right << setw(2) << reflector[2] << "    " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
+        ss << "     " << right << setw(2) << reflector[3] << "    " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
+        record.log(ss.str(),'D');
+    }
+    //3 rotor version
+    else
+    {
+        ss << (char)reflector[0] << "        " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
+        record.log(ss.str());
+        stringstream().swap(ss);
+        ss.clear();
+        ss << "           " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
+        ss << "           " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
+        record.log(ss.str(),'D');
+    }
+
+    //Plugs
+    string plugString = "";
+    if (plug.size() == 0) plugString = "NO PLUGS";
+    else for (unsigned int i = 0; i < plug.size(); i++)
+    {
+        plugString += plug[i][0] + 65;
+        plugString += plug[i][1] + 65;
+        plugString += ' ';
+    }
+    record.log(plugString,'D');
+
+    //Eval
+    if (includeEval) record.log(to_string(eval), 'D');
+
+}
+
+void enigma::set(int rotorSetting[][3], int reflectorSetting[], vector<array<int, 2>>& plug)
+{
+    zero.set(rotorSetting[0][0], rotorSetting[0][1], rotorSetting[0][2]);
+    one.set(rotorSetting[1][0], rotorSetting[1][1], rotorSetting[1][2]);
+    two.set(rotorSetting[2][0], rotorSetting[2][1], rotorSetting[2][2]);
+    R.set(reflectorSetting[0], reflectorSetting[1], reflectorSetting[2], reflectorSetting[3]);
+    P.set(plug);
+}
+
+void enigma::set(enigmaSetting setting)
+{
+    zero.set(setting.rotors[0][0], setting.rotors[0][1], setting.rotors[0][2]);
+    one.set(setting.rotors[1][0], setting.rotors[1][1], setting.rotors[1][2]);
+    two.set(setting.rotors[2][0], setting.rotors[2][1], setting.rotors[2][2]);
+    R.set(setting.reflector[0], setting.reflector[1], setting.reflector[2], setting.reflector[3]);
+    P.set(setting.plug);
 }
 
 void::enigma::stepRotors()
