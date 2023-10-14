@@ -11,9 +11,6 @@
 
 using namespace std;
 
-/*
-Assings the settings in settingsString to setting
-*/
 void readSetting(string settingsString, enigmaSetting& setting)
 {
     istringstream iss(settingsString);
@@ -53,7 +50,7 @@ void readSetting(string settingsString, enigmaSetting& setting)
 
 void selfTest()
 {
-    cout << "\nSelf Test\n\n";
+    cout << "\nSELF TEST\n\n";
     
     //Load in plaintext and settings
     string path = "Data/SelfTestData/";

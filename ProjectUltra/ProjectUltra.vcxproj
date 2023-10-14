@@ -145,6 +145,7 @@
     <ClCompile Include="src\CipherAttack\CipherAttack.cpp" />
     <ClCompile Include="src\CipherAttack\Crack.cpp" />
     <ClCompile Include="src\CipherAttack\IOC.cpp" />
+    <ClCompile Include="src\CipherAttack\Quadgram.cpp" />
     <ClCompile Include="src\Enigma\Enigma.cpp" />
     <ClCompile Include="src\Enigma\EnigmaEmulator.cpp" />
     <ClCompile Include="src\Source.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\CipherAttack\CipherAttack.h" />
     <ClInclude Include="src\CipherAttack\Crack.h" />
     <ClInclude Include="src\CipherAttack\IOC.h" />
+    <ClInclude Include="src\CipherAttack\Quadgram.h" />
     <ClInclude Include="src\Enigma\Enigma.h" />
     <ClInclude Include="src\Enigma\EnigmaEmulator.h" />
     <ClInclude Include="src\Testing\Benchmark.h" />
