@@ -199,18 +199,6 @@ void enigmaSetting::log(logbook& record, char level, bool includeEval)
         stream2 << "           " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
     }
 
-    //Logic to record at level if set
-    if (level)
-    {
-        record.log(stream1.str(), level);
-        record.log(stream2.str(), level);
-    }
-    else
-    {
-        record.log(stream1.str());
-        record.log(stream2.str(), 'D');
-    }
-
     //Plugs
     string plugString = "";
     if (plug.size() == 0) plugString = "NO PLUGS";
@@ -220,10 +208,22 @@ void enigmaSetting::log(logbook& record, char level, bool includeEval)
         plugString += plug[i][1] + 65;
         plugString += ' ';
     }
-    record.log(plugString,'D');
 
-    //Eval
-    if (includeEval) record.log(to_string(eval), 'D');
+    //Logic to record at level if set
+    if (level)
+    {
+        record.log(stream1.str(), level);
+        record.log(stream2.str(), level);
+        record.log(plugString, level);
+        if (includeEval) record.log(to_string(eval), level);
+    }
+    else
+    {
+        record.log(stream1.str());
+        record.log(stream2.str(), 'D');
+        record.log(plugString, 'D');
+        if (includeEval) record.log(to_string(eval), 'D');
+    }
 
 }
 
