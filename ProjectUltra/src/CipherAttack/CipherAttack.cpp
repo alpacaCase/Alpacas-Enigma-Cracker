@@ -18,7 +18,7 @@ void cipherAttack()
 	string plaintext;
 	
 	logbook record;
-	record.printingLevel = 'D';
+	record.printingLevel = 'L';
 
 	//Get ciphernumbers
 	cout << "\nCiphertext only attack\n\n";
@@ -137,6 +137,5 @@ void cipherAttack()
 
 	//Crack and format
 	plaintext = formatForOutput(numberVectorToString(crack(searchInstructions, ciphernumbers, reflectorPossibilities, extraPossibilities, rotorPossibilities, rotorPossibilities, rotorPossibilities, startingPlugs, record)));
-	cout << record.logPoints[0].descripton;
 	cout << "Plaintext is:\n" << plaintext << "\n\n";
 }

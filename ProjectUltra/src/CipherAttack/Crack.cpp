@@ -190,7 +190,7 @@ vector<int> crack(vector<array<array<int,2>, 3>> searchInstructions, vector<int>
 
 
 	record.log("Best settings are:");
-	settings[0].log(record);
+	settings[0].log(record, 'L');
 	record.log("Time taken for attack: " + to_string(record.timeInterval("Starting attack", "Finished attack\n")) + "ms\n");
 
 	//Decode and output

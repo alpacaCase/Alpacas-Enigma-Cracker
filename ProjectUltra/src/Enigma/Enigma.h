@@ -104,8 +104,10 @@ struct enigmaSetting
 
     /*
     Logs the setting in record
+    if level != 0 then all logs are at this level
+    if includeEval then eval is recorded too
     */
-    void log(logbook& record, bool includeEval = true);
+    void log(logbook& record, char level = 0, bool includeEval = true);
 };
 
 /*

@@ -19,7 +19,7 @@ int main()
 	while (true)
 	{
 		cout << "\nSelect option E - Enigma emulator / C - Ciphertext only style attack / K - Known plaintext attack / T - Testing: ";
-		options = { 'E', 'B', 'C', 'T' };
+		options = { 'E', 'C', 'K', 'T' };
 		option = getOption(options);
 		switch (option)
 		{

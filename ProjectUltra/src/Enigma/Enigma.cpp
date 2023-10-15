@@ -178,33 +178,37 @@ int rotor::codeBack(int plainNumber)
     return (mappingBack[(plainNumber + position - ringSetting + 26) % 26] - position + ringSetting + 26) % 26;
 }
 
-void enigmaSetting::log(logbook& record, bool includeEval)
+void enigmaSetting::log(logbook& record, char level, bool includeEval)
 {
     vector<string> rotorNames = { "   I","  II"," III","  IV","   V","  VI"," VII","VIII" };
-    stringstream ss;
+    stringstream stream1;
+    stringstream stream2;
     
     //4 rotor version
     if (reflector[0] == 'b' or reflector[0] == 'c')
     {
-        ss << (char)reflector[0] << "     " << (char)reflector[1] << "  " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
-        record.log(ss.str());
-        //Clear ss
-        stringstream().swap(ss);
-        ss << "     " << right << setw(2) << reflector[2] << "    " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
-        ss << "     " << right << setw(2) << reflector[3] << "    " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
-        record.log(ss.str(),'D');
+        stream1 << (char)reflector[0] << "     " << (char)reflector[1] << "  " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
+        stream2 << "     " << right << setw(2) << reflector[2] << "    " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
+        stream2 << "     " << right << setw(2) << reflector[3] << "    " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
     }
     //3 rotor version
     else
     {
-        ss << (char)reflector[0] << "        " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
-        record.log(ss.str());
-        //Clear ss
-        stringstream().swap(ss);
-        ss.clear();
-        ss << "           " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
-        ss << "           " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
-        record.log(ss.str(),'D');
+        stream1 << (char)reflector[0] << "        " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
+        stream2 << "           " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
+        stream2 << "           " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
+    }
+
+    //Logic to record at level if set
+    if (level)
+    {
+        record.log(stream1.str(), level);
+        record.log(stream2.str(), level);
+    }
+    else
+    {
+        record.log(stream1.str());
+        record.log(stream2.str(), 'D');
     }
 
     //Plugs
