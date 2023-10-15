@@ -1,3 +1,7 @@
+#
+#This program generates random enigma settings and saves them, then encrypts known plaintext with those settings and saves them to enable the c++ code to be tested against a known good machine
+#
+
 from random import randint, seed
 from enigma import Machine
 from enigma.builtin_rotors import Rotors

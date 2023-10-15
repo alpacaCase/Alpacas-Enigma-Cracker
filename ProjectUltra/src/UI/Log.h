@@ -5,7 +5,7 @@
 #include <string>
 
 /*
-A struct records a point in time and a string to indicate what happened at that time, and at what "logging level" (D,L,S) it should be outputted to console)
+A struct records a point in time and a string to indicate what happened at that time, and at what "logging level" [D,L,S] it should be outputted to console)
 */
 struct logPoint
 {
@@ -16,7 +16,7 @@ struct logPoint
 
 /*
 A log that records a vector of all logpoints, the times they were made, and allows calculations of the times between them
-Also automatically outputs log descriptions to the console depending on prinitingLevel (D - all logs are printed, L - light/some logs are printed, S - silent/only messages that should always display are printed)
+printingLevel [D,L,S], if set to D all logs are printed to the console, if set to S only logs flagged as S are printed to the console
 */
 struct logbook
 {
@@ -24,7 +24,7 @@ struct logbook
 	char printingLevel;
 
 	/*
-	Adds a log point with descritption and the level at which it should be outputted to console
+	Adds a log point with description and the level at which it should be outputted to console
 	*/
 	void log(std::string description, char level = 'L');
 	

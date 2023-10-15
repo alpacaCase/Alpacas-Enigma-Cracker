@@ -188,6 +188,7 @@ void enigmaSetting::log(logbook& record, bool includeEval)
     {
         ss << (char)reflector[0] << "     " << (char)reflector[1] << "  " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
         record.log(ss.str());
+        //Clear ss
         stringstream().swap(ss);
         ss << "     " << right << setw(2) << reflector[2] << "    " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";
         ss << "     " << right << setw(2) << reflector[3] << "    " << right << setw(2) << rotors[0][2] << "    " << right << setw(2) << rotors[1][2] << "    " << right << setw(2) << rotors[2][2];
@@ -198,6 +199,7 @@ void enigmaSetting::log(logbook& record, bool includeEval)
     {
         ss << (char)reflector[0] << "        " << rotorNames[rotors[0][0] - 1] << "  " << rotorNames[rotors[1][0] - 1] << "  " << rotorNames[rotors[2][0] - 1];
         record.log(ss.str());
+        //Clear ss
         stringstream().swap(ss);
         ss.clear();
         ss << "           " << right << setw(2) << rotors[0][1] << "    " << right << setw(2) << rotors[1][1] << "    " << right << setw(2) << rotors[2][1] << "\n";

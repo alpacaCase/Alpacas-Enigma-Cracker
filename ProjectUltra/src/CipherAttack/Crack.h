@@ -7,7 +7,7 @@
 #include "../UI/Log.h"
 
 /*
-Function performs a cipher text only style attack on cipher numbers, in each round it will search for the best rotor positions, then ring settings, then plugboards. 
+Function performs a cipher text only style attack on ciphernumbers, in each round it will search for the best rotor positions, then ring settings, then plugboards. 
 It is capable of performing multiple rounds of attack as defined by searchInstructions and it outputs a vector of (hopefully) plaintextNumbers when finished.
 ->searchInstruction contains arrays of the form {search type ['I' - index of coicidence], number of arrangements to be kept for the next stage}
 	3 of these are used per round for position, setting, plugboard search

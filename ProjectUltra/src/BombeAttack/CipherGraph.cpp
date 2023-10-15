@@ -62,13 +62,12 @@ void cipherGraph::decolour()
 
 void cipherGraph::DFS(int currentNode, vector<array<int, 2>>& currentPath)
 {
-	//If have already visited node add tree branch to loops and then go back one level of recursion
+	//If have already visited node add tree branch to circuits and then go back one level of recursion
 	if (nodes[currentNode].coloured)
 	{
 		currentPath.push_back({ currentNode, -1 });
-		loops.push_back({ currentPath });
+		circuits.push_back({ currentPath });
 		currentPath.pop_back();
-
 	}
 	
 	//Otherwise
@@ -87,35 +86,35 @@ void cipherGraph::DFS(int currentNode, vector<array<int, 2>>& currentPath)
 	}
 }
 
-void cipherGraph::findLoops()
+void cipherGraph::findCircuits()
 {
 	decolour();
-	loops.clear();
+	circuits.clear();
 	vector<array<int, 2>> currentPath;
 	vector<vector<array<int, 2>>> tempLoops;
 
-	//Perform DFS to create tree in loops
+	//Perform DFS to create tree in circuits
 	for (int i = 0; i < 26; i++)
 	{
 		if (!nodes[i].coloured) DFS(i, currentPath);
 	}
 
-	//Cuts tree branches so they are loops
-	for (unsigned int i = 0; i < loops.size(); i++)
+	//Cuts tree branches so they are circuits
+	for (unsigned int i = 0; i < circuits.size(); i++)
 	{
-		cutAtLoop(loops[i]);
+		cutAtLoop(circuits[i]);
 	}
 
-	//Remove all non loops
+	//Remove all non circuits
 	tempLoops.clear();
-	for (unsigned int i = 0; i < loops.size(); i++)
+	for (unsigned int i = 0; i < circuits.size(); i++)
 	{
-		if (loops[i][0][1] != loops[i][1][1]) tempLoops.push_back(loops[i]);
+		if (circuits[i][0][1] != circuits[i][1][1]) tempLoops.push_back(circuits[i]);
 	}
-	loops = tempLoops;
+	circuits = tempLoops;
 
-	//Sort loops so shortest is first
-	sort(loops.begin(), loops.end(), isLongerLoop);
+	//Sort circuits so shortest is first
+	sort(circuits.begin(), circuits.end(), isLongerLoop);
 }
 
 void cipherGraph::buildGraph(string plainText, string cipherText)
@@ -124,6 +123,7 @@ void cipherGraph::buildGraph(string plainText, string cipherText)
 	int b;
 	for (int i = 0; i < signed(plainText.length()); i++)
 	{
+		//Avoid padding spaces
 		if (plainText[i] != ' ')
 		{
 			a = letterToNumber(plainText[i]);
@@ -133,7 +133,7 @@ void cipherGraph::buildGraph(string plainText, string cipherText)
 	}
 	cribLength = signed(plainText.length());
 
-	findLoops();
+	findCircuits();
 }
 
 string cipherGraph::debugLinksString()
@@ -156,19 +156,19 @@ string cipherGraph::debugLinksString()
 	return result;
 }
 
-string cipherGraph::debugLoopsString()
+string cipherGraph::debugCircuitsString()
 {
 	string result = "";
-	for (unsigned int i = 0; i < loops.size(); i++)
+	for (unsigned int i = 0; i < circuits.size(); i++)
 	{
 		result += "Loop ";
 		result += paddedNumber(i);
 		result += ": ";
-		for (unsigned int j = 0; j < loops[i].size(); j++)
+		for (unsigned int j = 0; j < circuits[i].size(); j++)
 		{
-			result += numberToLetter(loops[i][j][0]);
+			result += numberToLetter(circuits[i][j][0]);
 			result += " ";
-			result += paddedNumber(loops[i][j][1]);
+			result += paddedNumber(circuits[i][j][1]);
 			result += "  ";
 		}
 		result += "\n";

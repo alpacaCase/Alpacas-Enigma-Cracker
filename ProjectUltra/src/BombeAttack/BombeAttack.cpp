@@ -63,10 +63,11 @@ void bombeAttack()
 	string plaintext;
 
 	//Get ciphernumbers
-	cout << "\nBOMBE ATTACK\n\n";
+	cout << "\nKnown plaintext attack\n\n";
 	cout << "Enter ciphertext filename: ";
 	string ciphertext = cleanString(getUserFile());
 
+	//Get plaintext and find its position relative to ciphertext
 	while (true)
 	{
 		cout << "Enter plaintext: ";
@@ -186,6 +187,7 @@ void bombeAttack()
 
 	cout << "\n";
 
+	//Run attack
 	try
 	{
 		plainnumbers = bombe(instructions, plaintext, ciphertext, reflectorPossibilities, extraPossibilities, rotorPossibilities, rotorPossibilities, rotorPossibilities);
