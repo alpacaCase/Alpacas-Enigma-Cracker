@@ -90,7 +90,7 @@ void crackThreadHandler(array<int, 2>& instructions, vector<int>& ciphernumbers,
 	
 	for (unsigned int i = 0; i < settings.size(); i++) settings[i].computed = false;
 
-	//Make "optimum" number of threads
+	//Make "optimal" number of threads
 	int numberOfThreads = _Thrd_hardware_concurrency();
 	if (signed(settings.size()) < numberOfThreads) numberOfThreads = signed(settings.size());
 	mutex computeLock;

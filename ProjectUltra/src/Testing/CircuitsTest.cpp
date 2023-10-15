@@ -52,30 +52,30 @@ void circuitsTest()
 		plainnumbers.resize(length);
 		vector<vector<int>> ciphernumbers = encryptRandoms(n, plainnumbers, reflectorPossibilities, extraPossibilities, rotorPossibilities, 10);
 
-		//Sum number of loops, averaging number and lengths
+		//Sum number of circuits, averaging number and lengths
 		int total = 0;
 		int totalLoopLengths = 0;
 		for (int i = 0; i < n; i++)
 		{
 			cipherGraph menu;
 			menu.buildGraph(numberVectorToString(plainnumbers), numberVectorToString(ciphernumbers[i]));
-			menu.findLoops();
-			total += menu.loops.size();
-			for (unsigned int j = 0; j < menu.loops.size(); j++)
+			menu.findCircuits();
+			total += menu.circuits.size();
+			for (unsigned int j = 0; j < menu.circuits.size(); j++)
 			{
-				totalLoopLengths += menu.loops[j].size();
+				totalLoopLengths += menu.circuits[j].size();
 			}
 		}
 
 		//Calculate and output
 		double average = double(total) / double(n);
 		double averageLoopLength = double(totalLoopLengths) / double(total);
-		string temp = "Case " + to_string(k) + ", length " + paddedNumber(length) + ", average # of loops: " + to_string(average) + ", average # of vertices in loop: " + to_string(averageLoopLength) + "\n";
+		string temp = "Case " + to_string(k) + ", length " + paddedNumber(length) + ", average # of circuits: " + to_string(average) + ", average # of vertices in circuit: " + to_string(averageLoopLength) + "\n";
 		cout << temp;
 		output += temp;
 	}
 
 	//Save
 	saveFile("Data/TestData/CircuitsTest.txt", output);
-	cout << "\nSaved as LoopsTest.txt\n\n";
+	cout << "\nSaved as CircuitsTest.txt\n\n";
 }

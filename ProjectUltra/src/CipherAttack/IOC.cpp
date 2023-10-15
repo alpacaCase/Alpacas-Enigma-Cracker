@@ -102,6 +102,7 @@ void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 
 	/*
 	Since we know that the rotors are at the right setting for at least part of the message we will loop through all possible notch positions for the 2 relevant rotors without changing their position
+	To allow for the different turover points the positions of the left two rotors are allowed to vary by +-1
 	*/
 	setting.rotors[0][1] = (setting.rotors[0][1] + 25) % 26;
 	setting.rotors[1][1] = (setting.rotors[1][1] + 25) % 26;

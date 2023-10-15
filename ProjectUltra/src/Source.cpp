@@ -13,12 +13,12 @@ using namespace std;
 
 int main()
 {
-	cout << "Project Ultra V0.2\n";
+	cout << "Alpacas Enigma Cracker V0.3\n";
 	vector<char> options;
 	char option;
 	while (true)
 	{
-		cout << "\nSelect option E - Enigma emulator / B - Bombe style attack / C - Ciphertext only style attack / T - Testing: ";
+		cout << "\nSelect option E - Enigma emulator / C - Ciphertext only style attack / K - Known plaintext attack / T - Testing: ";
 		options = { 'E', 'B', 'C', 'T' };
 		option = getOption(options);
 		switch (option)
@@ -26,11 +26,11 @@ int main()
 		case 'E':
 			enigmaEmulator();
 			break;
-		case 'B':
-			bombeAttack();
-			break;
 		case 'C':
 			cipherAttack();
+			break;
+		case 'K':
+			bombeAttack();
 			break;
 		case 'T':
 			testing();

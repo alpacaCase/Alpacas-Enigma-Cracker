@@ -17,13 +17,6 @@ using namespace std;
 vector<vector<vector<vector<double>>>> quadgrams;
 
 /*
-Notes:
-setting array takes form {reflector, extra rotors, extra rotors position, extra rotors setting, rotors zero, rotors zero position, rotors zero setting, rotors one...
-arrangement array takes form {rotors two, rotors one, rotors zero, extra rotors, reflector}
-plugArray[index] is -1 if no knowledge about what index is plugged to, otherwise plugArray[index] is what index is plugged to
-*/
-
-/*
 Function returns deque of the next cribLength mappings from machine
 */
 void makeMappings(enigma& machine, int cribLength, deque<array<int, 26>>& mappings, deque<array<int, 3>>& settings)
@@ -39,17 +32,17 @@ void makeMappings(enigma& machine, int cribLength, deque<array<int, 26>>& mappin
 }
 
 /*
-Function recursively tests menu for the current mappings
-Adds setting and result to possibleSettings and plugs if loop is possible with current mappings
+Function recursively tests if there are consistent solutions to the cipherGraph in mappings
+Adds setting and result to possibleSettings and plugs if circuit is consistent with current mappings
 settingArray is setting information for mapping at mappings[0]
 */
-void testLoops(unsigned int index, array<int, 26>& currentPlug, deque<array<int, 26>>& mappings, cipherGraph& menu, array<int, 13>& settingArray, vector<array<int, 13>>& possibleSettings, vector<array<int, 26>>& plugs)
+void testCircuits(unsigned int index, array<int, 26>& currentPlug, deque<array<int, 26>>& mappings, cipherGraph& menu, array<int, 13>& settingArray, vector<array<int, 13>>& possibleSettings, vector<array<int, 26>>& plugs)
 {
 	bool noCollision;
 	int testLetter;
 
 	//End recursion condition
-	if (index + 1 > menu.loops.size())
+	if (index + 1 > menu.circuits.size())
 	{
 		bool hasChanged = true;
 		noCollision = true;
@@ -107,11 +100,11 @@ void testLoops(unsigned int index, array<int, 26>& currentPlug, deque<array<int,
 			noCollision = true;
 
 			//Go round loop
-			for (unsigned int j = 0; j < menu.loops[index].size(); j++)
+			for (unsigned int j = 0; j < menu.circuits[index].size(); j++)
 			{
 				//Plug loop letter, if thats impossible emilinate this possibility
 				a = testLetter;
-				b = menu.loops[index][j][0];
+				b = menu.circuits[index][j][0];
 				if (newPlug[a] == -1 && newPlug[b] == -1)
 				{
 					newPlug[a] = b;
@@ -123,20 +116,20 @@ void testLoops(unsigned int index, array<int, 26>& currentPlug, deque<array<int,
 					break;
 				}
 
-				testLetter = mappings[menu.loops[index][j][1]][testLetter];
+				testLetter = mappings[menu.circuits[index][j][1]][testLetter];
 			}
 
 			//If there is a loop and plugs are possible
 			if (noCollision && testLetter == i)
 			{
-				testLoops(index + 1, newPlug, mappings, menu, settingArray, possibleSettings, plugs);
+				testCircuits(index + 1, newPlug, mappings, menu, settingArray, possibleSettings, plugs);
 			}
 		}
 	}
 }
 
 /*
-Function adds all possible setting and result combinations to possibleSettings and plugs for a given arrangement of rotors and menu
+Function takes given cipherGaph and tests each of the given arrangments for any settings that are consistent, adding them and plugs to possibleSettings and plugs
 	fullSearch - if true will also try all possible ring settings for middle rotors, 26x slower, usually not necessary
 */
 void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrangement, vector<array<int, 13>>& possibleSettings, vector<array<int, 26>>& plugs)
@@ -154,6 +147,7 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 	int reflectorSetting[4];
 	vector<array<int, 2>> plug = {};
 
+	//Set machine settings to arrangment
 	rotorSetting[2][0] = arrangement[0];
 	vector<int> twoNotches = notches[rotorSetting[2][0] - 1];
 
@@ -167,17 +161,20 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 	reflectorSetting[1] = arrangement[3];
 	reflectorSetting[3] = 0;
 
-	//Calculate cycle length
+	//Defining search space
+	//Calculate cycle length, we will search from notch to notch, this is done to avoid areas where just stepping the machine each time might miss settings due to double stepping
 	int cycleLength = ((26 / signed(twoNotches.size())) * ((26 / signed(oneNotches.size())) - 1)) + 1;
-
 	//Check if four rotors enigma
 	int extraPositionStop;
 	if (reflectorSetting[0] == 'b' || reflectorSetting[0] == 'c') extraPositionStop = 26;
 	else extraPositionStop = 1;
 
 	enigma machine;
+
+	//These will hold the mappings and corresponding settings, and as the machine is incremented the front will be removed and new items added to the back to save duplicating mappings for every circuits test
 	deque<array<int, 26>> mappings;
 	deque<array<int, 3>> settings;
+
 	array<int, 13> settingArray;
 	array<int, 26> startPlug;
 	for (int i = 0; i < 26; i++) startPlug[i] = -1;
@@ -209,7 +206,7 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 				//Loop left rotors position
 				for (rotorSetting[0][1] = 0; rotorSetting[0][1] < 26; rotorSetting[0][1]++)
 				{
-					//Loop through start positions
+					//Loop through notches
 					for (unsigned int i = 0; i < oneNotches.size(); i++)
 					{
 						rotorSetting[1][1] = oneNotches[i];
@@ -217,20 +214,19 @@ void checkArrangement(bool fullSearch, cipherGraph& menu, array<int, 5>& arrange
 						{
 							rotorSetting[2][1] = twoNotches[j];
 
-							//Build mappings
+							//Make first mapping and recursively test ciruicts in menu from here until the next notch
 							machine.set(rotorSetting, reflectorSetting, plug);
 							makeMappings(machine, menu.cribLength, mappings, settings);
 
-							//Test loops
 							for (int k = 0; k < cycleLength; k++)
 							{
 								settingArray[5] = settings[0][0];
 								settingArray[8] = settings[0][1];
 								settingArray[11] = settings[0][2];
 
-								testLoops(0, startPlug, mappings, menu, settingArray, possibleSettings, plugs);
+								testCircuits(0, startPlug, mappings, menu, settingArray, possibleSettings, plugs);
 
-								//Increment settings by one
+								//Knock one setting and mapping off the front, step the machine, add new settings and mappings to the back ready to test again
 								settings.pop_front();
 								settings.push_back(machine.getSettingArray());
 								machine.stepRotors();
@@ -264,7 +260,7 @@ void printArrangement(array<int, 5>& arrangement)
 
 /*
 Function is worker thread for checking arrangements
-	instructions - {[V - verbose lots of logging, L - Lite logging, S - Silent no logging], [1 full search, 0 normal search]}
+	instructions - {[D - bebug lots of logging, L - Lite logging, S - Silent no logging], [1 full search, 0 normal search]}
 	computeLock - Lock for getting next compute task
 	resultsLock - lock for adding to possibleSettings etc.
 	consoleLock - lock for printing to the console
@@ -277,7 +273,7 @@ void bombeThread(array<int, 2>& instructions, mutex& computeLock, mutex& results
 	unsigned int i = 0;
 	vector<array<int, 13>> tempPossibleSettings;
 	vector<array<int, 26>> tempPlugs;
-	bool liteLogging = instructions[0] == 'L' || instructions[0] == 'V';
+	bool liteLogging = instructions[0] == 'L' || instructions[0] == 'D';
 	while (i < arrangements.size() && !error)
 	{
 		//Look for next uncomputed task
@@ -320,14 +316,14 @@ void bombeThread(array<int, 2>& instructions, mutex& computeLock, mutex& results
 }
 
 /*
-Function creates optimal number of bombeThreads, runs them and joins them
-	instructions - {[V - verbose lots of logging, L - Lite logging, S - Silent no logging], [1 full search, 0 normal search]}
+Function creates "optimal" number of bombeThreads, runs them and joins them
+	instructions - {[D - debug, lots of logging, L - Lite logging, S - Silent no logging], [1 full search, 0 normal search]}
 	menu - menu to check
 Error 2: Would generate more than 10e6 possibilities
 */
 void bombeThreadHandler(array<int, 2>& instructions, cipherGraph& menu, vector<array<int, 5>>& arrangements, vector<array<int,13>>& possibleSettings, vector<array<int, 26>>& plugs)
 {
-	bool fullLogging = instructions[0] == 'V';
+	bool fullLogging = instructions[0] == 'D';
 	
 	vector<thread> threads;
 	vector<bool> computed(arrangements.size(), false);
@@ -476,7 +472,7 @@ void improve(vector<int>& ciphernumbers, array<int, 13>& setting, array<int, 26>
 
 /*
 Function is worker thread for improve
-	instructions - {[V - verbose lots of logging, L - Lite logging, S - Silent no logging], ignored}
+	instructions - {[D - debug lots of logging, L - Lite logging, S - Silent no logging], ignored}
 	computeLock - Lock for getting next compute task
 	consoleLock - lock for printing to the console
 	percentCount - true if that percent has already been logged to console
@@ -485,7 +481,7 @@ void improveThread(array<int, 2>& instructions, mutex& computeLock, mutex& conso
 	vector<array<int, 26>>& plugs, vector<double>& evals)
 {
 	unsigned int i = 0;
-	bool liteLogging = instructions[0] == 'L' || instructions[0] == 'V';
+	bool liteLogging = instructions[0] == 'L' || instructions[0] == 'D';
 	while (i < possibleSettings.size())
 	{
 		//Look for next uncomputed task
@@ -520,13 +516,13 @@ void improveThread(array<int, 2>& instructions, mutex& computeLock, mutex& conso
 }
 
 /*
-Function creates optimal number of improveThreads and joins them
-		instructions - {[V - verbose lots of logging, L - Lite logging, S - Silent no logging], ignored}
+Function creates optimal number of improveThreads then joins them
+		instructions - {[D - verbose lots of logging, L - Lite logging, S - Silent no logging], ignored}
 */
 void improveThreadHandler(array<int, 2>& instructions, vector<int>& ciphernumbers, vector<array<int,13>>& possibleSettings, vector<array<int,26>>& plugs, vector<double>& evals)
 {
-	bool fullLogging = instructions[0] == 'V';
-	bool liteLogging = instructions[0] == 'V' || instructions[0] == 'L';
+	bool fullLogging = instructions[0] == 'D';
+	bool liteLogging = instructions[0] == 'D' || instructions[0] == 'L';
 
 	vector<thread> threads;
 	vector<bool> computed(possibleSettings.size(), false);
@@ -607,23 +603,30 @@ void printSettingArray(array<int,13> setting, array<int,26> plugArray)
 	cout << plugString << "\n\n";
 }
 
+/*
+Notes:
+setting array takes form {reflector, extra rotors, extra rotors position, extra rotors setting, rotors zero, rotors zero position, rotors zero setting, rotors one...
+arrangement array takes form {rotors two, rotors one, rotors zero, extra rotors, reflector}
+plugArray[index] is -1 if no knowledge about what index is plugged to, otherwise plugArray[index] is what index is plugged to
+*/
+
 vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertext, vector<int> reflectorPossibilities, vector<int> extraPossibilities, vector<int> zeroPossibilities, vector<int> onePossibilities, 
 	vector<int> twoPossibilities)
 {
-	bool liteLogging = instructions[0] == 'V' || instructions[0] == 'L';
-	bool fullLogging = instructions[0] == 'V';
+	bool liteLogging = instructions[0] == 'D' || instructions[0] == 'L';
+	bool fullLogging = instructions[0] == 'D';
 
 	//Generate possible arrangements
 	if (liteLogging) cout << "Generating search space\n\n";
 	vector<array<int, 5>> arrangements = generateArrangements(reflectorPossibilities, extraPossibilities, zeroPossibilities, onePossibilities, twoPossibilities);
 
-	//Generate menu
+	//Generate graph from ciphertext/plaintext
 	if (liteLogging) cout << "Generating menu\n\n";
 	cipherGraph menu;
 	menu.buildGraph(plaintext, ciphertext);
 
-	//If no loops throw error 1
-	if (!menu.loops.size()) throw 1;
+	//If no circuits throw error 1
+	if (!menu.circuits.size()) throw 1;
 
 	//Debug info
 	if (fullLogging)
@@ -631,17 +634,18 @@ vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertex
 		cout << "Crib length: " << menu.cribLength << "\n\n";
 		cout << menu.debugLinksString();
 	}
-	if (liteLogging) cout << "Found " << menu.loops.size() << " loops\n";
-	if(fullLogging)	cout << menu.debugLoopsString();
+	if (liteLogging) cout << "Found " << menu.circuits.size() << " loops\n";
+	if(fullLogging)	cout << menu.debugCircuitsString();
 
-	//Declare variables and set
+	//Declare variables to hold possibilities
 	vector<array<int, 13>> possibleSettings;
 	vector<array<int, 26>> plugs;
 
-	//Search arrangements
+	//Search each arrangment for setting that is consitent with the circuits
 	if (liteLogging) cout << "\nBeginning arrangement search\n";
 	bombeThreadHandler(instructions, menu, arrangements, possibleSettings, plugs);
 	
+	//Debug info
 	if (possibleSettings.size() == 0) throw 3;
 	if (liteLogging) cout << "Found total of " << possibleSettings.size() << " possible settings\n\n";
 
@@ -651,15 +655,13 @@ vector<int> bombe(array<int, 2> instructions, string plaintext, string ciphertex
 
 	if (liteLogging) cout << "Searching through possible settings\n";
 
-	//Make evals
+	//For each possible setting attempt to improve the output (measured by quadgrams score) by varying setting and plugs
 	vector<double> evals;
 	for (unsigned int i = 0; i < possibleSettings.size(); i++)  evals.push_back(-INFINITY);
-
-	//Improve and find best
 	improveThreadHandler(instructions, ciphernumbers, possibleSettings, plugs, evals);
 	int highestIndex = bestIndex(evals);
 
-	//Decode with best setting
+	//Decode with best setting and output
 	vector<int> plainnumbers = ciphernumbers;
 	encodeFromSetttingArray(plainnumbers, possibleSettings[highestIndex], plugs[highestIndex]);
 
