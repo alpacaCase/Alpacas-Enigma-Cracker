@@ -103,12 +103,12 @@ void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 	/*
 	Since we know that the rotors are at the right setting for at least part of the message we will loop through all possible notch positions for the 2 relevant rotors without changing their position
 	*/
-	//setting.rotors[0][1] = (setting.rotors[0][1] + 25) % 26;
-	//setting.rotors[1][1] = (setting.rotors[1][1] + 25) % 26;
+	setting.rotors[0][1] = (setting.rotors[0][1] + 25) % 26;
+	setting.rotors[1][1] = (setting.rotors[1][1] + 25) % 26;
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 1; j++)
+		for (int j = 0; j < 3; j++)
 		{
 			for (int k = 0; k < 26; k++)
 			{
@@ -137,10 +137,10 @@ void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 				setting.rotors[1][1] = (setting.rotors[1][1] + 1) % 26;
 				setting.rotors[1][2] = (setting.rotors[1][2] + 1) % 26;
 			}
-			//setting.rotors[1][1] = (setting.rotors[1][1] + 1) % 26;
+			setting.rotors[1][1] = (setting.rotors[1][1] + 1) % 26;
 		}
-		//setting.rotors[1][1] = (setting.rotors[1][1] + 23) % 26;
-		//setting.rotors[0][1] = (setting.rotors[0][1] + 1) % 26;
+		setting.rotors[1][1] = (setting.rotors[1][1] + 23) % 26;
+		setting.rotors[0][1] = (setting.rotors[0][1] + 1) % 26;
 	}
 
 	setting.rotors[0][1] = bestSettings[0];
