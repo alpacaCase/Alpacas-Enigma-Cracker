@@ -10,7 +10,7 @@ using namespace std;
 
 void cipherBenchmark()
 {
-	cout << "\nCipher Text Only Benchmark\n\n";
+	cout << "\nCiphertext Only Benchmark\n\n";
 	cout << "This benchmark measures the performance, both speed and accuracy, of the ciphertext only attack\n";
 
 	//Get cipherBenchmark settings
