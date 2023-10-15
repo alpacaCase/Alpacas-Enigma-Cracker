@@ -150,8 +150,8 @@
     <ClCompile Include="src\Enigma\Enigma.cpp" />
     <ClCompile Include="src\Enigma\EnigmaEmulator.cpp" />
     <ClCompile Include="src\Source.cpp" />
-    <ClCompile Include="src\Testing\Benchmark.cpp" />
-    <ClCompile Include="src\Testing\LoopsTest.cpp" />
+    <ClCompile Include="src\Testing\CipherBenchmark.cpp" />
+    <ClCompile Include="src\Testing\CircuitsTest.cpp" />
     <ClCompile Include="src\Testing\SelfTest.cpp" />
     <ClCompile Include="src\Testing\Testing.cpp" />
     <ClCompile Include="src\Testing\TestingTools.cpp" />
@@ -169,8 +169,8 @@
     <ClInclude Include="src\CipherAttack\Quadgram.h" />
     <ClInclude Include="src\Enigma\Enigma.h" />
     <ClInclude Include="src\Enigma\EnigmaEmulator.h" />
-    <ClInclude Include="src\Testing\Benchmark.h" />
-    <ClInclude Include="src\Testing\LoopsTest.h" />
+    <ClInclude Include="src\Testing\CipherBenchmark.h" />
+    <ClInclude Include="src\Testing\CircuitsTest.h" />
     <ClInclude Include="src\Testing\SelfTest.h" />
     <ClInclude Include="src\Testing\Testing.h" />
     <ClInclude Include="src\Testing\TestingTools.h" />

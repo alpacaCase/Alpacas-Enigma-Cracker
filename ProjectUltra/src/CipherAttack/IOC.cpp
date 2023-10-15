@@ -37,7 +37,7 @@ void searchPositionsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 	plainnumbers.reserve(ciphernumbers.size());
 	enigma machine;
 
-	//4 rotor
+	//4 rotor, loop through every rotor position for all 4 rotors
 	if (setting.reflector[0] == 'b' || setting.reflector[0] == 'c')
 	{
 		for (setting.reflector[2] = 0; setting.reflector[2] < 26; setting.reflector[2]++) for (setting.rotors[2][1] = 0; setting.rotors[2][1] < 26; setting.rotors[2][1]++) 
@@ -61,7 +61,7 @@ void searchPositionsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 		}
 
 	}
-	//3 rotor
+	//3 rotor, loop through every rotor position for all 3 rotors
 	else
 	{
 		for (setting.rotors[2][1] = 0; setting.rotors[2][1] < 26; setting.rotors[2][1]++) for (setting.rotors[1][1] = 0; setting.rotors[1][1] < 26; setting.rotors[1][1]++)
@@ -100,6 +100,9 @@ void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 	enigma machine;
 	array<int, 5> bestSettings;
 
+	/*
+	Since we know that the rotors are at the right setting for at least part of the message we will loop through all possible notch positions for the 2 relevant rotors without changing their position
+	*/
 	setting.rotors[0][1] = (setting.rotors[0][1] + 25) % 26;
 	setting.rotors[1][1] = (setting.rotors[1][1] + 25) % 26;
 
@@ -146,65 +149,6 @@ void searchSettingsIOC(vector<int>& ciphernumbers, enigmaSetting& setting)
 	setting.rotors[2][1] = bestSettings[3];
 	setting.rotors[2][2] = bestSettings[4];
 
-	/*
-	while (true)
-	{
-		//copy and decrypt
-		plainnumbers = ciphernumbers;
-		machine.set(rotorSetting, reflectorSetting, plug);
-		machine.code(plainnumbers);
-
-		//evaluate
-		currentIOC = IOC(plainnumbers);
-		if (currentIOC > setting.eval)
-		{
-			setting.eval = currentIOC;
-			bestSetting[0] = rotorSetting[2][2];
-			bestPosition[0] = rotorSetting[2][1];
-		}
-
-		//advance rotors
-		rotorSetting[2][2] = (rotorSetting[2][2] + 1) % 26;
-		if (rotorSetting[2][2] == 0)
-		{
-			rotorSetting[2][1] = (rotorSetting[2][1] + 1) % 26;
-			if (rotorSetting[2][1] == 0)
-			{
-				rotorSetting[1][1] = (rotorSetting[1][1] + 1) % 26;
-				if (rotorSetting[1][1] == 0) break;
-			}
-		}
-
-	}
-
-	setting.eval = 0;
-
-	while (true)
-	{
-		//copy and decrypt
-		plainnumbers = ciphernumbers;
-		machine.set(rotorSetting, reflectorSetting, plug);
-		machine.code(plainnumbers);
-
-		//evaluate
-		currentIOC = IOC(plainnumbers);
-		if (currentIOC > setting.eval)
-		{
-			setting.eval = currentIOC;
-			bestSetting[1] = rotorSetting[1][2];
-			bestPosition[1] = rotorSetting[1][1];
-		}
-
-		//advance rotors
-		rotorSetting[1][2] = (rotorSetting[1][2] + 1) % 26;
-		if (rotorSetting[1][2] == 0)
-		{
-			rotorSetting[1][1] = (rotorSetting[1][1] + 1) % 26;
-			if (rotorSetting[1][1] == 0) break;
-		}
-
-	}
-	*/
 }
 
 void searchPlugboardIOC(vector<int>& ciphernumbers, enigmaSetting& setting)

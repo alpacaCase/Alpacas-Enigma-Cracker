@@ -57,10 +57,10 @@
     <ClCompile Include="src\CipherAttack\Quadgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Testing\LoopsTest.cpp">
+    <ClCompile Include="src\Testing\CircuitsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Testing\Benchmark.cpp">
+    <ClCompile Include="src\Testing\CipherBenchmark.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\Log.cpp">
@@ -110,10 +110,10 @@
     <ClInclude Include="src\CipherAttack\Quadgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\LoopsTest.h">
+    <ClInclude Include="src\Testing\CircuitsTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\Benchmark.h">
+    <ClInclude Include="src\Testing\CipherBenchmark.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\Log.h">

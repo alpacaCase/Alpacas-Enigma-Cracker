@@ -2,14 +2,14 @@
 #include <vector>
 #include <string>
 
-#include "LoopsTest.h"
+#include "CircuitsTest.h"
 #include "TestingTools.h"
 #include "../BombeAttack/CipherGraph.h"
 #include "../UI/UI.h"
 
 using namespace std;
 
-void loopsTest()
+void circuitsTest()
 {
 	//Possible settings
 	vector<int> reflectorPossibilities = { 'B' };
@@ -18,19 +18,22 @@ void loopsTest()
 
 	//Strings to test
 	vector<string> strings;
-	strings.push_back("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	strings.push_back("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	strings.push_back("tobeornottobethatisthetroublingthingtobeornottobethatisthetroublingthing");
-	strings.push_back("itisatruthuniversallyacknowledgedthataitisatruthuniversallyacknowledgedthata");
+	strings.push_back("itisatruthuniversallyacknowledgedthataitisatruthuniversallyacknowledgedt");
 	strings.push_back("thequickbrownfoxjumpedoverthelazydogthequickbrownfoxjumpedoverthelazydog");
 
 	//Output string
 	string output = "";
 
-	//Number per string-length combination
+	//Program will test length of plaintexts from [0,maxLength)
+	//Note input strings have a length of 72
+	int maxLength = 41;
+	//Program will average over n encryption for each length/plaintext combination
 	int n = 10000;
 
-	cout << "\nLoops Test\n\n";
-	cout << "This program tests the average number of loops (and their average length) generated in the \"menus\" when different texts are encrypted with random settings\n";
+	cout << "\nCircuits Test\n\n";
+	cout << "The known plaintext attack requires finding all the circuits in a graph formed by combining the plaintext and cipher text. This program tests the average number produced and their length for given plaintexts when encrypted using random settings " << n << " times\n";
 
 	for (unsigned int i = 0; i < strings.size(); i++)
 	{
@@ -41,14 +44,15 @@ void loopsTest()
 
 	cout << endl;
 
-	for (unsigned int k = 0; k < strings.size(); k++) for (int length = 1; length < 31; length++)
+	//loop over each case and then each length
+	for (unsigned int k = 0; k < strings.size(); k++) for (int length = 1; length < maxLength; length++)
 	{
 		//Convert to numbers of right size and randomly encrypt
 		vector<int> plainnumbers = stringToNumbers(strings[k]);
 		plainnumbers.resize(length);
 		vector<vector<int>> ciphernumbers = encryptRandoms(n, plainnumbers, reflectorPossibilities, extraPossibilities, rotorPossibilities, 10);
 
-		//Sum number of loops
+		//Sum number of loops, averaging number and lengths
 		int total = 0;
 		int totalLoopLengths = 0;
 		for (int i = 0; i < n; i++)
@@ -72,6 +76,6 @@ void loopsTest()
 	}
 
 	//Save
-	saveFile("Data/TestData/LoopsTest.txt", output);
+	saveFile("Data/TestData/CircuitsTest.txt", output);
 	cout << "\nSaved as LoopsTest.txt\n\n";
 }

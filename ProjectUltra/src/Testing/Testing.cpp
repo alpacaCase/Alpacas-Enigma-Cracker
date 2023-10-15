@@ -4,10 +4,10 @@
 
 #include "Testing.h"
 #include "SelfTest.h"
-#include "LoopsTest.h"
+#include "CircuitsTest.h"
 #include "../UI/UI.h"
 #include "../Enigma/Enigma.h"
-#include "Benchmark.h"
+#include "CipherBenchmark.h"
 
 using namespace std;
 
@@ -15,18 +15,19 @@ void testing()
 {
 	vector<char> options;
 	char option;
-	cout << "Select option S - Self test / L - Loops test / B - Benchmark: ";
-	options = { 'S', 'L', 'B' };
+	cout << "Select option S - Self test / C - Ciphertext only benchmark / L - Circuits test: ";
+	options = { 'S', 'C', 'L' };
 	option = getOption(options);
 	switch (option)
 	{
 	case 'S':
 		selfTest();
 		break;
-	case 'L':
-		loopsTest();
+	case 'C':
+		cipherBenchmark();
 		break;
-	case 'B':
-		benchmark();
+	case 'L':
+		circuitsTest();
+		break;
 	}
 }

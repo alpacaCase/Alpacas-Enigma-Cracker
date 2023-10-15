@@ -8,12 +8,12 @@
 
 using namespace std;
 
-void benchmark()
+void cipherBenchmark()
 {
 	cout << "\nCipher Text Only Benchmark\n\n";
 	cout << "This benchmark measures the performance, both speed and accuracy, of the ciphertext only attack\n";
 
-	//Get benchmark settings
+	//Get cipherBenchmark settings
 	cout << "Enter number of settings to generate: ";
 	int n = getNumber(0, 10000);
 
