@@ -1,3 +1,5 @@
 #pragma once
 
-void cipherAttack();
+#include "../UI/Log.h"
+
+void cipherAttack(logbook& record);

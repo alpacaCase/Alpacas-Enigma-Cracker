@@ -47,10 +47,8 @@ void findNextCribPosition(string& plaintext, string& ciphertext, bool forceStep 
 	}
 }
 
-void bombeAttack()
+void bombeAttack(logbook& record)
 {	
-	char logging = 'L';
-	
 	vector<int> ciphernumbers;
 	vector<int> plainnumbers;
 	vector<int> reflectorPossibilities;
@@ -59,7 +57,7 @@ void bombeAttack()
 	vector<char> options;
 	char option;
 	array<int, 2> instructions;
-	instructions[0] = logging;
+	instructions[0] = record.printingLevel;
 	string plaintext;
 
 	//Get ciphernumbers

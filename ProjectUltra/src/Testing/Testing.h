@@ -1,3 +1,5 @@
 #pragma once
 
-void testing();
+#include "../UI/Log.h"
+
+void testing(logbook& record);

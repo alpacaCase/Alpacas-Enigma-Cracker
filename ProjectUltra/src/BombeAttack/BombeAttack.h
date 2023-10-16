@@ -1,3 +1,5 @@
 #pragma once
 
-void bombeAttack();
+#include "../UI/Log.h"
+
+void bombeAttack(logbook& record);

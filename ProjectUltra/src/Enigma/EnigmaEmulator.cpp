@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void enigmaEmulator()
+void enigmaEmulator(logbook& record)
 {
 	cout << "\nENIGMA EMULATOR\n\n";
 	cout << "Rotor types are given as numbers [1,8], all settings should be given as letters or numbers [0,25]\n\n";

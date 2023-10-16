@@ -42,3 +42,8 @@ double logbook::timeInterval(std::string start, std::string end)
 	throw 50;
 }
 
+logbook::logbook()
+{
+	printingLevel = 'L';
+	log("Starting log", 'D');
+}

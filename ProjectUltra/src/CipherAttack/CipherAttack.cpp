@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void cipherAttack()
+void cipherAttack(logbook &record)
 {
 	vector<array<array<int, 2>, 3>> searchInstructions;
 	vector<int> ciphernumbers;
@@ -16,9 +16,6 @@ void cipherAttack()
 	vector<int> rotorPossibilities;
 	vector<array<int, 2>> startingPlugs = {};
 	string plaintext;
-	
-	logbook record;
-	record.printingLevel = 'L';
 
 	//Get ciphernumbers
 	cout << "\nCiphertext only attack\n\n";

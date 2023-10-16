@@ -4,6 +4,7 @@
 #include <array>
 
 #include "UI/UI.h"
+#include "UI/Log.h"
 #include "Enigma/EnigmaEmulator.h"
 #include "CipherAttack/CipherAttack.h"
 #include "BombeAttack/BombeAttack.h"
@@ -13,35 +14,32 @@ using namespace std;
 
 int main()
 {
-	cout << "Alpacas Enigma Cracker V0.3\n";
+	cout << "Alpaca's Enigma Cracker V0.3.1\n";
+
+	logbook record;
+
 	vector<char> options;
 	char option;
 	while (true)
 	{
-		cout << "\nSelect option E - Enigma emulator / C - Ciphertext only style attack / K - Known plaintext attack / T - Testing: ";
+		cout << "\nSelect option E - Enigma emulator / C - Ciphertext only attack / K - Known plaintext attack / T - Testing: ";
 		options = { 'E', 'C', 'K', 'T' };
 		option = getOption(options);
 		switch (option)
 		{
 		case 'E':
-			enigmaEmulator();
+			enigmaEmulator(record);
 			break;
 		case 'C':
-			cipherAttack();
+			cipherAttack(record);
 			break;
 		case 'K':
-			bombeAttack();
+			bombeAttack(record);
 			break;
 		case 'T':
-			testing();
+			testing(record);
 			break;
 		}
-
-		//Repeat?
-		cout << "Perform another operation Y/N? ";
-		options = { 'Y', 'N' };
-		option = getOption(options);
-		if (option == 'N') break;
 	}
 	return 0;
 }

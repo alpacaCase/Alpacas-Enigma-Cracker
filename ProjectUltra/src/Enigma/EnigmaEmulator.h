@@ -1,3 +1,5 @@
 #pragma once
 
-void enigmaEmulator();
+#include "../UI/Log.h"
+
+void enigmaEmulator(logbook& record);
