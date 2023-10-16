@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void circuitsTest()
+void circuitsTest(logbook& record)
 {
 	//Possible settings
 	vector<int> reflectorPossibilities = { 'B' };

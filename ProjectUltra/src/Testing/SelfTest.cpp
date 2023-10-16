@@ -48,7 +48,7 @@ void readSetting(string settingsString, enigmaSetting& setting)
     }
 }
 
-void selfTest()
+void selfTest(logbook& record)
 {
     cout << "\nSelf Test\n\n";
     

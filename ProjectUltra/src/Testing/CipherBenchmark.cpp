@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void cipherBenchmark()
+void cipherBenchmark(logbook& record)
 {
 	cout << "\nCiphertext Only Benchmark\n\n";
 	cout << "This benchmark measures the performance, both speed and accuracy, of the ciphertext only attack\n";
@@ -96,8 +96,7 @@ void cipherBenchmark()
 
 
 	//Benchmark
-	logbook record;
-	record.printingLevel = 'S';
+	if (record.printingLevel == 'L') record.printingLevel = 'S';
 	record.log("Starting benchmark",'S');
 
 	//Generate random ciphertext
@@ -122,4 +121,9 @@ void cipherBenchmark()
 
 	record.log("Finished benchmark\n",'S');
 	cout << "Time taken for benchmark: " << record.timeInterval("Starting benchmark", "Finished benchmark\n") << "ms\n";
+	record.log("Saving as CipherBenchmark.txt", 'S');
+	record.saveLog("Data/TestData/CipherBenchmark.txt", "Starting benchmark", "Saving as CipherBenchmark.txt");
+
+
+	if (record.printingLevel == 'S') record.printingLevel = 'L';
 }

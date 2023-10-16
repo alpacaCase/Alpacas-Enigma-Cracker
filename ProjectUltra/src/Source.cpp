@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-	cout << "Alpaca's Enigma Cracker V0.3.1\n";
+	cout << "Alpaca's Enigma Cracker V0.3.2\n";
 
 	logbook record;
 

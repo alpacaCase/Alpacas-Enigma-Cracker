@@ -1,3 +1,5 @@
 #pragma once
 
-void cipherBenchmark();
+#include "../UI/Log.h"
+
+void cipherBenchmark(logbook& record);

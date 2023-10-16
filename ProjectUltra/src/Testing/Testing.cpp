@@ -33,13 +33,13 @@ void testing(logbook& record)
 		}
 		break;
 	case 'S':
-		selfTest();
+		selfTest(record);
 		break;
 	case 'C':
-		cipherBenchmark();
+		cipherBenchmark(record);
 		break;
 	case 'L':
-		circuitsTest();
+		circuitsTest(record);
 		break;
 	}
 }

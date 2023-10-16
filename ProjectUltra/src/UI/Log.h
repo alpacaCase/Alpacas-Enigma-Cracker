@@ -16,7 +16,7 @@ A struct records a point in time and a string to indicate what happened at that 
 struct logPoint
 {
 	std::chrono::steady_clock::time_point time;
-	std::string descripton;
+	std::string description;
 	char level;
 };
 
@@ -30,17 +30,25 @@ struct logbook
 	std::vector<logPoint> logPoints;
 	char printingLevel;
 
-	logbook();
-
 	/*
 	Adds a log point with description and the level at which it should be outputted to console
 	*/
 	void log(std::string description, char level = 'L');
 	
 	/*
-	Returns the time interval in milliseconds between the most recent logPoint with end description and the previous logPoint with start as its description
-	throws 50 if no such interval exists
+	Finds the most log with description and returns its index, throws 50 if no such log exists
+	*/
+	int  findIndex(std::string description);
+
+	/*
+	Returns the time interval in milliseconds between the most recent logPoint with start as its description and end as its description
 	*/
 	double timeInterval(std::string start, std::string end);
 
+	/*
+	Saves all the logs between the most recent instance of start and end, throws 51 if not a valid interval (ie start happens after end)
+	*/
+	void saveLog(std::string fileName, std::string start, std::string end);
+	
+	logbook();
 };
